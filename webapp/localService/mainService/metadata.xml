@@ -6,7 +6,7 @@
     <edmx:DataServices m:DataServiceVersion="2.0">
         <Schema Namespace="MyCompanyModelRevisedPK" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
 
-            <!-- EntityType: Employee -->
+            <!-- EntityType: Employee (MODIFIED) -->
             <EntityType Name="Employee" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="EmployeeID" />
@@ -16,8 +16,8 @@
                 <Property Name="LastName" Type="Edm.String" Nullable="true" MaxLength="40" sap:label="Last Name"/>
                 <Property Name="Age" Type="Edm.Int16" Nullable="true" sap:label="Age"/>
                 <Property Name="DateHire" Type="Edm.String" Nullable="true" sap:label="Date Hire"/>
-                <Property Name="CareerLevel" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Career Level"/> <!-- FK (conceptually) to CareerList.CareerLevel -->
-                <Property Name="CurrentProject" Type="Edm.String" Nullable="true" MaxLength="40" sap:label="Current Project"/> <!-- FK (conceptually) to ProjectList.ProjectName -->
+                <Property Name="CareerId" Type="Edm.String" Nullable="true" MaxLength="10" sap:label="Career ID"/> <!-- MODIFIED: FK to CareerList.CareerId -->
+                <Property Name="CurrentProjectId" Type="Edm.String" Nullable="true" MaxLength="10" sap:label="Current Project ID"/> <!-- MODIFIED: FK to ProjectList.ProjectId -->
                 <!-- Navigation Properties -->
                 <NavigationProperty Name="ToSkills" Relationship="MyCompanyModelRevisedPK.EmployeeToSkillLink" FromRole="FromEmployee" ToRole="ToSkill"/>
                 <NavigationProperty Name="ToCareerList" Relationship="MyCompanyModelRevisedPK.EmployeeCareerListLink" FromRole="FromEmployee" ToRole="ToCareerList"/>
@@ -30,12 +30,12 @@
                     <PropertyRef Name="ProjectId" />
                 </Key>
                 <Property Name="ProjectId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Project Id"/>
-                <Property Name="ProjectName" Type="Edm.String" Nullable="true" MaxLength="40" sap:label="Project Name"/> <!-- Assumed unique for FK relationship from Employee.CurrentProject -->
+                <Property Name="ProjectName" Type="Edm.String" Nullable="true" MaxLength="40" sap:label="Project Name"/>
                 <!-- Navigation Property -->
                 <NavigationProperty Name="ToEmployees" Relationship="MyCompanyModelRevisedPK.EmployeeProjectListLink" FromRole="ToProjectList" ToRole="FromEmployee"/>
             </EntityType>
 
-            <!-- EntityType: Skill -->
+            <!-- EntityType: Skill (MODIFIED) -->
             <EntityType Name="Skill" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="SkillId" /> <!-- PK for the skill assignment -->
@@ -43,8 +43,8 @@
                 <Property Name="SkillId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Skill Assignment Id"/> <!-- PK for this skill assignment -->
                 <Property Name="EmployeeId" Type="Edm.String" Nullable="true" MaxLength="40" sap:label="Employee Id"/> <!-- FK to Employee.EmployeeID -->
                 <Property Name="ProficiencyID" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Proficiency ID"/> <!-- FK to ProficiencyList.ProficiencyId -->
-                <Property Name="SkillName" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Skill Name"/> <!-- FK to SkillList.SkillName -->
-                <Property Name="ProficiencyLevel" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Proficiency Level"/> <!-- Redundant if ProficiencyID links to ProficiencyList -->
+                <Property Name="SkillName" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Skill Reference ID"/> <!-- FK to SkillList.SkillId -->
+                <!-- <Property Name="ProficiencyLevel" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Proficiency Level"/> REMOVED due to redundancy -->
                 <!-- Navigation Properties -->
                 <NavigationProperty Name="ToEmployee" Relationship="MyCompanyModelRevisedPK.EmployeeToSkillLink" FromRole="ToSkill" ToRole="FromEmployee"/>
                 <NavigationProperty Name="ToSkillList" Relationship="MyCompanyModelRevisedPK.SkillToSkillListLink" FromRole="FromSkill" ToRole="ToSkillList"/>
@@ -68,9 +68,9 @@
                     <PropertyRef Name="SkillId" /> <!-- PK -->
                 </Key>
                 <Property Name="SkillId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Skill Id"/> <!-- PK -->
-                <Property Name="SkillName" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Skill Name"/> <!-- Referenced by Skill.SkillName, assumed unique -->
+                <Property Name="SkillName" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Skill Name"/> <!-- Actual human-readable name of the skill -->
                 <!-- Navigation Property -->
-                <NavigationProperty Name="ToSkills" Relationship="MyCompanyModelRevisedPK.SkillToSkillListLink" FromRole="ToSkillList" ToRole="FromSkill"/> <!-- One SkillList entry (by name) can map to many Skill assignments -->
+                <NavigationProperty Name="ToSkills" Relationship="MyCompanyModelRevisedPK.SkillToSkillListLink" FromRole="ToSkillList" ToRole="FromSkill"/>
             </EntityType>
 
             <!-- EntityType: CareerList -->
@@ -79,13 +79,12 @@
                     <PropertyRef Name="CareerId" />
                 </Key>
                 <Property Name="CareerId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Career Id"/>
-                <Property Name="CareerLevel" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Career Level"/> <!-- Assumed unique for FK relationship from Employee.CareerLevel -->
+                <Property Name="CareerLevel" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Career Level"/>
                 <!-- Navigation Property -->
                 <NavigationProperty Name="ToEmployees" Relationship="MyCompanyModelRevisedPK.EmployeeCareerListLink" FromRole="ToCareerList" ToRole="FromEmployee"/>
             </EntityType>
 
             <!-- Associations -->
-            <!-- Employee (1) <-> Skill (*) Link: Employee.EmployeeID to Skill.EmployeeId -->
             <Association Name="EmployeeToSkillLink" sap:content-version="1">
                 <End Type="MyCompanyModelRevisedPK.Employee" Multiplicity="0..1" Role="FromEmployee"/>
                 <End Type="MyCompanyModelRevisedPK.Skill" Multiplicity="*" Role="ToSkill"/>
@@ -99,21 +98,19 @@
                 </ReferentialConstraint>
             </Association>
 
-            <!-- Skill (*) <-> SkillList (1) Link: Skill.SkillName to SkillList.SkillName -->
             <Association Name="SkillToSkillListLink" sap:content-version="1">
-                <End Type="MyCompanyModelRevisedPK.SkillList" Multiplicity="1" Role="ToSkillList"/> <!-- Principal: SkillList -->
-                <End Type="MyCompanyModelRevisedPK.Skill" Multiplicity="*" Role="FromSkill"/> <!-- Dependent: Skill (many skills can share the same SkillName from SkillList) -->
+                <End Type="MyCompanyModelRevisedPK.SkillList" Multiplicity="1" Role="ToSkillList"/>
+                <End Type="MyCompanyModelRevisedPK.Skill" Multiplicity="*" Role="FromSkill"/>
                 <ReferentialConstraint>
                     <Principal Role="ToSkillList">
-                        <PropertyRef Name="SkillName"/> <!-- Principal key from SkillList -->
+                        <PropertyRef Name="SkillId"/>
                     </Principal>
                     <Dependent Role="FromSkill">
-                        <PropertyRef Name="SkillName"/> <!-- Foreign key in Skill -->
+                        <PropertyRef Name="SkillName"/>
                     </Dependent>
                 </ReferentialConstraint>
             </Association>
 
-            <!-- Skill (*) <-> ProficiencyList (1) Link: Skill.ProficiencyID to ProficiencyList.ProficiencyId -->
             <Association Name="SkillToProficiencyListLink" sap:content-version="1">
                 <End Type="MyCompanyModelRevisedPK.ProficiencyList" Multiplicity="0..1" Role="ToProficiencyList"/>
                 <End Type="MyCompanyModelRevisedPK.Skill" Multiplicity="*" Role="FromSkill"/>
@@ -127,30 +124,30 @@
                 </ReferentialConstraint>
             </Association>
 
-            <!-- Employee (*) <-> CareerList (0..1) Link: Employee.CareerLevel to CareerList.CareerLevel -->
+            <!-- Employee (*) <-> CareerList (0..1) Link: Employee.CareerId to CareerList.CareerId (MODIFIED) -->
             <Association Name="EmployeeCareerListLink" sap:content-version="1">
                 <End Type="MyCompanyModelRevisedPK.CareerList" Multiplicity="0..1" Role="ToCareerList"/>
                 <End Type="MyCompanyModelRevisedPK.Employee" Multiplicity="*" Role="FromEmployee"/>
                 <ReferentialConstraint>
                     <Principal Role="ToCareerList">
-                        <PropertyRef Name="CareerLevel"/> <!-- Assumes CareerLevel is unique in CareerList table -->
+                        <PropertyRef Name="CareerId"/> <!-- MODIFIED -->
                     </Principal>
                     <Dependent Role="FromEmployee">
-                        <PropertyRef Name="CareerLevel"/>
+                        <PropertyRef Name="CareerId"/> <!-- MODIFIED -->
                     </Dependent>
                 </ReferentialConstraint>
             </Association>
 
-            <!-- Employee (*) <-> ProjectList (0..1) Link: Employee.CurrentProject to ProjectList.ProjectName -->
+            <!-- Employee (*) <-> ProjectList (0..1) Link: Employee.CurrentProjectId to ProjectList.ProjectId (MODIFIED) -->
             <Association Name="EmployeeProjectListLink" sap:content-version="1">
                 <End Type="MyCompanyModelRevisedPK.ProjectList" Multiplicity="0..1" Role="ToProjectList"/>
                 <End Type="MyCompanyModelRevisedPK.Employee" Multiplicity="*" Role="FromEmployee"/>
                 <ReferentialConstraint>
                     <Principal Role="ToProjectList">
-                        <PropertyRef Name="ProjectName"/> <!-- Assumes ProjectName is unique in ProjectList table -->
+                        <PropertyRef Name="ProjectId"/> <!-- MODIFIED -->
                     </Principal>
                     <Dependent Role="FromEmployee">
-                        <PropertyRef Name="CurrentProject"/>
+                        <PropertyRef Name="CurrentProjectId"/> <!-- MODIFIED -->
                     </Dependent>
                 </ReferentialConstraint>
             </Association>
