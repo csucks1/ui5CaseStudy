@@ -4,184 +4,73 @@
     xmlns:sap="http://www.sap.com/Protocols/SAPData">
 
     <edmx:DataServices m:DataServiceVersion="2.0">
-        <Schema Namespace="MyCompanyModelRevisedPK" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <Schema Namespace="com.example.odata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xml:lang="en">
 
-            <!-- EntityType: Employee (MODIFIED) -->
-            <EntityType Name="Employee" sap:content-version="1">
+            <EntityType Name="Employee">
                 <Key>
-                    <PropertyRef Name="EmployeeID" />
+                    <PropertyRef Name="FirstName" />
                 </Key>
-                <Property Name="EmployeeID" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Employee ID"/>
-                <Property Name="FirstName" Type="Edm.String" Nullable="true" MaxLength="40" sap:label="First Name"/>
-                <Property Name="LastName" Type="Edm.String" Nullable="true" MaxLength="40" sap:label="Last Name"/>
+                <Property Name="FirstName" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="First Name"/>
+                <Property Name="LastName" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Last Name"/>
+                <Property Name="EmployeeID" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Employee ID"/>
                 <Property Name="Age" Type="Edm.Int16" Nullable="true" sap:label="Age"/>
-                <Property Name="DateHire" Type="Edm.String" Nullable="true" sap:label="Date Hire"/>
-                <Property Name="CareerId" Type="Edm.String" Nullable="true" MaxLength="10" sap:label="Career ID"/> <!-- MODIFIED: FK to CareerList.CareerId -->
-                <Property Name="CurrentProjectId" Type="Edm.String" Nullable="true" MaxLength="10" sap:label="Current Project ID"/> <!-- MODIFIED: FK to ProjectList.ProjectId -->
-                <!-- Navigation Properties -->
-                <NavigationProperty Name="ToSkills" Relationship="MyCompanyModelRevisedPK.EmployeeToSkillLink" FromRole="FromEmployee" ToRole="ToSkill"/>
-                <NavigationProperty Name="ToCareerList" Relationship="MyCompanyModelRevisedPK.EmployeeCareerListLink" FromRole="FromEmployee" ToRole="ToCareerList"/>
-                <NavigationProperty Name="ToProjectList" Relationship="MyCompanyModelRevisedPK.EmployeeProjectListLink" FromRole="FromEmployee" ToRole="ToProjectList"/>
+                <Property Name="DateHire" Type="Edm.String" Nullable="true" sap:label="DateHire"/>
+                <Property Name="CareerLevel" Type="Edm.String" MaxLength="2" Nullable="true" sap:label="CareerLevel"/>
+                <Property Name="CurrentProject" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="CurrentProject"/>
             </EntityType>
 
-            <!-- EntityType: ProjectList -->
-            <EntityType Name="ProjectList" sap:content-version="1">
+            <EntityType Name="ProjectList">
                 <Key>
                     <PropertyRef Name="ProjectId" />
                 </Key>
-                <Property Name="ProjectId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Project Id"/>
-                <Property Name="ProjectName" Type="Edm.String" Nullable="true" MaxLength="40" sap:label="Project Name"/>
-                <!-- Navigation Property -->
-                <NavigationProperty Name="ToEmployees" Relationship="MyCompanyModelRevisedPK.EmployeeProjectListLink" FromRole="ToProjectList" ToRole="FromEmployee"/>
+                <Property Name="ProjectId" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="ProjectId"/>
+                <Property Name="ProjectName" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="ProjectName"/>
             </EntityType>
 
-            <!-- EntityType: Skill (MODIFIED) -->
-            <EntityType Name="Skill" sap:content-version="1">
+            <EntityType Name="Skill">
                 <Key>
-                    <PropertyRef Name="SkillId" /> <!-- PK for the skill assignment -->
+                    <PropertyRef Name="EmployeeeId" />
                 </Key>
-                <Property Name="SkillId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Skill Assignment Id"/> <!-- PK for this skill assignment -->
-                <Property Name="EmployeeId" Type="Edm.String" Nullable="true" MaxLength="40" sap:label="Employee Id"/> <!-- FK to Employee.EmployeeID -->
-                <Property Name="ProficiencyID" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Proficiency ID"/> <!-- FK to ProficiencyList.ProficiencyId -->
-                <Property Name="SkillName" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Skill Reference ID"/> <!-- FK to SkillList.SkillId -->
-                <!-- <Property Name="ProficiencyLevel" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Proficiency Level"/> REMOVED due to redundancy -->
-                <!-- Navigation Properties -->
-                <NavigationProperty Name="ToEmployee" Relationship="MyCompanyModelRevisedPK.EmployeeToSkillLink" FromRole="ToSkill" ToRole="FromEmployee"/>
-                <NavigationProperty Name="ToSkillList" Relationship="MyCompanyModelRevisedPK.SkillToSkillListLink" FromRole="FromSkill" ToRole="ToSkillList"/>
-                <NavigationProperty Name="ToProficiencyList" Relationship="MyCompanyModelRevisedPK.SkillToProficiencyListLink" FromRole="FromSkill" ToRole="ToProficiencyList"/>
+                <Property Name="EmployeeeId" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="EmployeeeId"/>
+                <Property Name="SkillId" Type="Edm.String" MaxLength="10" Nullable="true" sap:label="SkillId"/>
+                <Property Name="ProficiencyID" Type="Edm.String" MaxLength="2" Nullable="true" sap:label="ProficiencyID"/>
+                <Property Name="SkillName" Type="Edm.String" MaxLength="20" Nullable="true" sap:label="SkillName"/>
+                <Property Name="ProficiencyLevel" Type="Edm.String" MaxLength="2" Nullable="true" sap:label="ProficiencyLevel"/>
             </EntityType>
 
-            <!-- EntityType: ProficiencyList -->
-            <EntityType Name="ProficiencyList" sap:content-version="1">
+            <EntityType Name="ProficiencyList">
                 <Key>
                     <PropertyRef Name="ProficiencyId" />
                 </Key>
-                <Property Name="ProficiencyId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Proficiency Id"/>
-                <Property Name="ProficiencyLevel" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Proficiency Level"/>
-                <!-- Navigation Property -->
-                <NavigationProperty Name="ToSkills" Relationship="MyCompanyModelRevisedPK.SkillToProficiencyListLink" FromRole="ToProficiencyList" ToRole="FromSkill"/>
+                <Property Name="ProficiencyId" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="ProficiencyId"/>
+                <Property Name="ProficiencyLevel" Type="Edm.String" MaxLength="2" Nullable="true" sap:label="ProficiencyLevel"/>
             </EntityType>
 
-            <!-- EntityType: SkillList -->
-            <EntityType Name="SkillList" sap:content-version="1">
+            <EntityType Name="SkillList">
                 <Key>
-                    <PropertyRef Name="SkillId" /> <!-- PK -->
+                    <PropertyRef Name="SkillId" />
                 </Key>
-                <Property Name="SkillId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Skill Id"/> <!-- PK -->
-                <Property Name="SkillName" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Skill Name"/> <!-- Actual human-readable name of the skill -->
-                <!-- Navigation Property -->
-                <NavigationProperty Name="ToSkills" Relationship="MyCompanyModelRevisedPK.SkillToSkillListLink" FromRole="ToSkillList" ToRole="FromSkill"/>
+                <Property Name="SkillId" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="SkillId"/>
+                <Property Name="SkillName" Type="Edm.String" MaxLength="20" Nullable="true" sap:label="SkillName"/>
             </EntityType>
 
-            <!-- EntityType: CareerList -->
-            <EntityType Name="CareerList" sap:content-version="1">
+            <EntityType Name="CareerList">
                 <Key>
                     <PropertyRef Name="CareerId" />
                 </Key>
-                <Property Name="CareerId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Career Id"/>
-                <Property Name="CareerLevel" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Career Level"/>
-                <!-- Navigation Property -->
-                <NavigationProperty Name="ToEmployees" Relationship="MyCompanyModelRevisedPK.EmployeeCareerListLink" FromRole="ToCareerList" ToRole="FromEmployee"/>
+                <Property Name="CareerId" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="CareerId"/>
+                <Property Name="CareerLevel" Type="Edm.String" MaxLength="2" Nullable="true" sap:label="CareerLevel"/>
             </EntityType>
 
-            <!-- Associations -->
-            <Association Name="EmployeeToSkillLink" sap:content-version="1">
-                <End Type="MyCompanyModelRevisedPK.Employee" Multiplicity="0..1" Role="FromEmployee"/>
-                <End Type="MyCompanyModelRevisedPK.Skill" Multiplicity="*" Role="ToSkill"/>
-                <ReferentialConstraint>
-                    <Principal Role="FromEmployee">
-                        <PropertyRef Name="EmployeeID"/>
-                    </Principal>
-                    <Dependent Role="ToSkill">
-                        <PropertyRef Name="EmployeeId"/>
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-
-            <Association Name="SkillToSkillListLink" sap:content-version="1">
-                <End Type="MyCompanyModelRevisedPK.SkillList" Multiplicity="1" Role="ToSkillList"/>
-                <End Type="MyCompanyModelRevisedPK.Skill" Multiplicity="*" Role="FromSkill"/>
-                <ReferentialConstraint>
-                    <Principal Role="ToSkillList">
-                        <PropertyRef Name="SkillId"/>
-                    </Principal>
-                    <Dependent Role="FromSkill">
-                        <PropertyRef Name="SkillName"/>
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-
-            <Association Name="SkillToProficiencyListLink" sap:content-version="1">
-                <End Type="MyCompanyModelRevisedPK.ProficiencyList" Multiplicity="0..1" Role="ToProficiencyList"/>
-                <End Type="MyCompanyModelRevisedPK.Skill" Multiplicity="*" Role="FromSkill"/>
-                <ReferentialConstraint>
-                     <Principal Role="ToProficiencyList">
-                        <PropertyRef Name="ProficiencyId"/>
-                    </Principal>
-                    <Dependent Role="FromSkill">
-                        <PropertyRef Name="ProficiencyID"/>
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-
-            <!-- Employee (*) <-> CareerList (0..1) Link: Employee.CareerId to CareerList.CareerId (MODIFIED) -->
-            <Association Name="EmployeeCareerListLink" sap:content-version="1">
-                <End Type="MyCompanyModelRevisedPK.CareerList" Multiplicity="0..1" Role="ToCareerList"/>
-                <End Type="MyCompanyModelRevisedPK.Employee" Multiplicity="*" Role="FromEmployee"/>
-                <ReferentialConstraint>
-                    <Principal Role="ToCareerList">
-                        <PropertyRef Name="CareerId"/> <!-- MODIFIED -->
-                    </Principal>
-                    <Dependent Role="FromEmployee">
-                        <PropertyRef Name="CareerId"/> <!-- MODIFIED -->
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-
-            <!-- Employee (*) <-> ProjectList (0..1) Link: Employee.CurrentProjectId to ProjectList.ProjectId (MODIFIED) -->
-            <Association Name="EmployeeProjectListLink" sap:content-version="1">
-                <End Type="MyCompanyModelRevisedPK.ProjectList" Multiplicity="0..1" Role="ToProjectList"/>
-                <End Type="MyCompanyModelRevisedPK.Employee" Multiplicity="*" Role="FromEmployee"/>
-                <ReferentialConstraint>
-                    <Principal Role="ToProjectList">
-                        <PropertyRef Name="ProjectId"/> <!-- MODIFIED -->
-                    </Principal>
-                    <Dependent Role="FromEmployee">
-                        <PropertyRef Name="CurrentProjectId"/> <!-- MODIFIED -->
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-
-            <!-- EntityContainer -->
-            <EntityContainer Name="MyCompanyContainerRevisedPK" m:IsDefaultEntityContainer="true" sap:supported-formats="json,xml">
-                <EntitySet Name="Employees" EntityType="MyCompanyModelRevisedPK.Employee" sap:content-version="1"/>
-                <EntitySet Name="ProjectLists" EntityType="MyCompanyModelRevisedPK.ProjectList" sap:content-version="1"/>
-                <EntitySet Name="Skills" EntityType="MyCompanyModelRevisedPK.Skill" sap:content-version="1"/>
-                <EntitySet Name="ProficiencyLists" EntityType="MyCompanyModelRevisedPK.ProficiencyList" sap:content-version="1"/>
-                <EntitySet Name="SkillLists" EntityType="MyCompanyModelRevisedPK.SkillList" sap:content-version="1"/>
-                <EntitySet Name="CareerLists" EntityType="MyCompanyModelRevisedPK.CareerList" sap:content-version="1"/>
-
-                <AssociationSet Name="EmployeeToSkillLinkSet" Association="MyCompanyModelRevisedPK.EmployeeToSkillLink" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="Employees" Role="FromEmployee"/>
-                    <End EntitySet="Skills" Role="ToSkill"/>
-                </AssociationSet>
-                <AssociationSet Name="SkillToSkillListLinkSet" Association="MyCompanyModelRevisedPK.SkillToSkillListLink" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="SkillLists" Role="ToSkillList"/>
-                    <End EntitySet="Skills" Role="FromSkill"/>
-                </AssociationSet>
-                <AssociationSet Name="SkillToProficiencyListLinkSet" Association="MyCompanyModelRevisedPK.SkillToProficiencyListLink" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="ProficiencyLists" Role="ToProficiencyList"/>
-                    <End EntitySet="Skills" Role="FromSkill"/>
-                </AssociationSet>
-                <AssociationSet Name="EmployeeCareerListLinkSet" Association="MyCompanyModelRevisedPK.EmployeeCareerListLink" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="CareerLists" Role="ToCareerList"/>
-                    <End EntitySet="Employees" Role="FromEmployee"/>
-                </AssociationSet>
-                <AssociationSet Name="EmployeeProjectListLinkSet" Association="MyCompanyModelRevisedPK.EmployeeProjectListLink" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="ProjectLists" Role="ToProjectList"/>
-                    <End EntitySet="Employees" Role="FromEmployee"/>
-                </AssociationSet>
+            <EntityContainer Name="MyEntities" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="Employee" EntityType="com.example.odata.Employee" sap:label="Employees"/>
+                <EntitySet Name="ProjectList" EntityType="com.example.odata.ProjectList" sap:label="Project Lists"/>
+                <EntitySet Name="Skill" EntityType="com.example.odata.Skill" sap:label="Skills"/>
+                <EntitySet Name="ProficiencyList" EntityType="com.example.odata.ProficiencyList" sap:label="Proficiency Lists"/>
+                <EntitySet Name="SkillList" EntityType="com.example.odata.SkillList" sap:label="Skill Lists"/>
+                <EntitySet Name="CareerList" EntityType="com.example.odata.CareerList" sap:label="Career Lists"/>
             </EntityContainer>
+
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>
