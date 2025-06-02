@@ -38,12 +38,12 @@
             <!-- EntityType: Skill -->
             <EntityType Name="Skill" sap:content-version="1">
                 <Key>
-                    <PropertyRef Name="SkillId" /> <!-- PK changed to SkillId -->
+                    <PropertyRef Name="SkillId" /> <!-- PK for the skill assignment -->
                 </Key>
-                <Property Name="SkillId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Skill Id"/> <!-- PK, and FK to SkillList.SkillId -->
+                <Property Name="SkillId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Skill Assignment Id"/> <!-- PK for this skill assignment -->
                 <Property Name="EmployeeId" Type="Edm.String" Nullable="true" MaxLength="40" sap:label="Employee Id"/> <!-- FK to Employee.EmployeeID -->
                 <Property Name="ProficiencyID" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Proficiency ID"/> <!-- FK to ProficiencyList.ProficiencyId -->
-                <Property Name="SkillName" Type="Edm.String" Nullable="true" MaxLength="20" sap:label="Skill Name"/> <!-- Redundant if SkillId links to SkillList  to be confirmed-->
+                <Property Name="SkillName" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Skill Name"/> <!-- FK to SkillList.SkillName -->
                 <Property Name="ProficiencyLevel" Type="Edm.String" Nullable="true" MaxLength="2" sap:label="Proficiency Level"/> <!-- Redundant if ProficiencyID links to ProficiencyList -->
                 <!-- Navigation Properties -->
                 <NavigationProperty Name="ToEmployee" Relationship="MyCompanyModelRevisedPK.EmployeeToSkillLink" FromRole="ToSkill" ToRole="FromEmployee"/>
@@ -65,12 +65,12 @@
             <!-- EntityType: SkillList -->
             <EntityType Name="SkillList" sap:content-version="1">
                 <Key>
-                    <PropertyRef Name="SkillId" />
+                    <PropertyRef Name="SkillId" /> <!-- PK -->
                 </Key>
-                <Property Name="SkillId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Skill Id"/>
-                <Property Name="SkillName" Type="Edm.String" Nullable="true" MaxLength="20" sap:label="Skill Name"/>
+                <Property Name="SkillId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Skill Id"/> <!-- PK -->
+                <Property Name="SkillName" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Skill Name"/> <!-- Referenced by Skill.SkillName, assumed unique -->
                 <!-- Navigation Property -->
-                <NavigationProperty Name="ToSkill" Relationship="MyCompanyModelRevisedPK.SkillToSkillListLink" FromRole="ToSkillList" ToRole="FromSkill"/> <!-- Changed from ToSkills to ToSkill due to 1-to-1 -->
+                <NavigationProperty Name="ToSkills" Relationship="MyCompanyModelRevisedPK.SkillToSkillListLink" FromRole="ToSkillList" ToRole="FromSkill"/> <!-- One SkillList entry (by name) can map to many Skill assignments -->
             </EntityType>
 
             <!-- EntityType: CareerList -->
@@ -87,7 +87,7 @@
             <!-- Associations -->
             <!-- Employee (1) <-> Skill (*) Link: Employee.EmployeeID to Skill.EmployeeId -->
             <Association Name="EmployeeToSkillLink" sap:content-version="1">
-                <End Type="MyCompanyModelRevisedPK.Employee" Multiplicity="0..1" Role="FromEmployee"/> <!-- An Employee can have zero or one Skill entry if EmployeeId is unique in Skill, or many if not. Given Skill.SkillId is PK, EmployeeId can repeat.-->
+                <End Type="MyCompanyModelRevisedPK.Employee" Multiplicity="0..1" Role="FromEmployee"/>
                 <End Type="MyCompanyModelRevisedPK.Skill" Multiplicity="*" Role="ToSkill"/>
                 <ReferentialConstraint>
                     <Principal Role="FromEmployee">
@@ -99,16 +99,16 @@
                 </ReferentialConstraint>
             </Association>
 
-            <!-- Skill (1) <-> SkillList (1) Link: Skill.SkillId to SkillList.SkillId -->
+            <!-- Skill (*) <-> SkillList (1) Link: Skill.SkillName to SkillList.SkillName -->
             <Association Name="SkillToSkillListLink" sap:content-version="1">
-                <End Type="MyCompanyModelRevisedPK.SkillList" Multiplicity="1" Role="ToSkillList"/>
-                <End Type="MyCompanyModelRevisedPK.Skill" Multiplicity="1" Role="FromSkill"/>
+                <End Type="MyCompanyModelRevisedPK.SkillList" Multiplicity="1" Role="ToSkillList"/> <!-- Principal: SkillList -->
+                <End Type="MyCompanyModelRevisedPK.Skill" Multiplicity="*" Role="FromSkill"/> <!-- Dependent: Skill (many skills can share the same SkillName from SkillList) -->
                 <ReferentialConstraint>
                     <Principal Role="ToSkillList">
-                        <PropertyRef Name="SkillId"/>
+                        <PropertyRef Name="SkillName"/> <!-- Principal key from SkillList -->
                     </Principal>
                     <Dependent Role="FromSkill">
-                        <PropertyRef Name="SkillId"/>
+                        <PropertyRef Name="SkillName"/> <!-- Foreign key in Skill -->
                     </Dependent>
                 </ReferentialConstraint>
             </Association>
