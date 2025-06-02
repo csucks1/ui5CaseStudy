@@ -1,6 +1,60 @@
-<mvc:View controllerName="sapips.training.employeeapp.controller.EmployeeList"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-    </Page>
+<mvc:View
+  controllerName="sapips.training.employeeapp.controller.EmployeeList"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  displayBlock="true">
+
+  <Page id="employeePage" title="{i18n>title}">
+    <content>
+      <!-- Table for Employee List -->
+      <Table
+        id="employeeTable"
+        mode="MultiSelect"
+        items="{/Employees}"
+        growing="true"
+        growingScrollToLoad="true">
+
+        <!-- Header with Dynamic Employee Count and Search -->
+        <headerToolbar>
+          <Toolbar id="employeeToolbar">
+            <Text id="employeeCountText" text="{employeeView>/employeeCountTitle}" class="sapUiTinyMarginBegin" />
+            <SearchField
+              id="employeeSearchField"
+              placeholder="Search by name"
+              liveChange=".onSearch"
+            />
+            <ToolbarSpacer id="toolbarSpacer" />
+            <Button id="addButton" text="Add" icon="sap-icon://add" press=".onAddEmployee" />
+            <Button id="deleteButton" text="Delete" icon="sap-icon://delete" press=".onDeleteEmployee" />
+          </Toolbar>
+        </headerToolbar>
+
+        <!-- Table Columns -->
+        <columns>
+          <Column id="colID"><Text id="colIDText" text="ID" /></Column>
+          <Column id="colFirstName"><Text id="colFirstNameText" text="First Name" /></Column>
+          <Column id="colLastName"><Text id="colLastNameText" text="Last Name" /></Column>
+          <Column id="colAge"><Text id="colAgeText" text="Age" /></Column>
+          <Column id="colHireDate"><Text id="colHireDateText" text="Date of Hire" /></Column>
+          <Column id="colCareer"><Text id="colCareerText" text="Career Level" /></Column>
+          <Column id="colProject"><Text id="colProjectText" text="Current Project" /></Column>
+        </columns>
+
+        <!-- Table Rows -->
+        <items>
+          <ColumnListItem id="employeeRowItem">
+            <cells>
+              <Text id="cellID" text="{EmployeeID}" />
+              <Text id="cellFirstName" text="{FirstName}" />
+              <Text id="cellLastName" text="{LastName}" />
+              <Text id="cellAge" text="{Age}" />
+              <Text id="cellHireDate" text="{HireDate}" />
+              <Text id="cellCareer" text="{CareerLevel}" />
+              <Text id="cellProject" text="{CurrentProject}" />
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
+  </Page>
 </mvc:View>
