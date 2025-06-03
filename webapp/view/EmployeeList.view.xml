@@ -10,14 +10,14 @@
       <Table
         id="employeeTable"
         mode="MultiSelect"
-        items="{/Employees}"
+        items="{/Employee}"
         growing="true"
         growingScrollToLoad="true">
 
         <!-- Header with Dynamic Employee Count and Search -->
         <headerToolbar>
           <Toolbar id="employeeToolbar">
-            <Text id="employeeCountText" text="{employeeView>/employeeCountTitle}" class="sapUiTinyMarginBegin" />
+            <Text id="employeeCountText" text="search" class="sapUiTinyMarginBegin" />
             <SearchField
               id="employeeSearchField"
               placeholder="Search by name"
@@ -48,7 +48,7 @@
               <Text id="cellFirstName" text="{FirstName}" />
               <Text id="cellLastName" text="{LastName}" />
               <Text id="cellAge" text="{Age}" />
-              <Text id="cellHireDate" text="{HireDate}" />
+              <Text id="cellHireDate" text="{DateHire}" />
               <Text id="cellCareer" text="{CareerLevel}" />
               <Text id="cellProject" text="{CurrentProject}" />
             </cells>
