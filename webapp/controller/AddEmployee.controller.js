@@ -107,14 +107,19 @@ sap.ui.define([
     
             if (!alphaRegex.test(firstName)) {
                 MessageToast.show("First name must contain only letters.");
+                return;
             } else if (!alphaRegex.test(lastName)) {
                 MessageToast.show("Last name must contain only letters.");
+                return;
             } else if (age < 0 || age > 90) {
                 MessageToast.show("Age cannot be less than 0 or more than 90");
+                return;
             } else if (sValueCL !== "" && sSelectedKeyCL === "") { // user manually input
                 MessageToast.show("Only entries from current career level list are valid");
+                return;
             } else if (sValueCP !== "" && sSelectedKeyCP === "") { // user manually input
                 MessageToast.show("Only entries from current project list are valid");
+                return;
             } else {
 
             var oData = {
@@ -236,6 +241,66 @@ sap.ui.define([
                 });                  
             }
             
+        },
+
+        onDeleteEmployeeSkill: function (oEvent) {
+            // 1. Get the 'skillsModel' specifically
+            var oSkillsModel = this.getView().getModel("skillsModel");
+
+            if (!oSkillsModel) {
+                MessageToast.show("Error: skillsModel not found!");
+                console.error("skillsModel not found. Ensure it's set on the view or a parent control.");
+                return;
+            }
+
+            // 2. Get the data array from the skillsModel
+            // Assuming skillsModel's root data IS the array of skills.
+            // If it's an object like { skills: [...] }, then use oSkillsModel.getProperty("/skills")
+            var aSkillsData = oSkillsModel.getProperty("/"); // Or oSkillsModel.getData();
+                                                          // getProperty("/") is often preferred for direct array models
+
+            if (!Array.isArray(aSkillsData)) {
+                 MessageToast.show("Error: Data in skillsModel is not an array!");
+                 console.error("skillsModel data is not an array:", aSkillsData);
+                 return;
+            }
+
+            var oTable = this.byId("listEmployee");
+            var aSelectedItems = oTable.getSelectedItems();
+
+            if (aSelectedItems.length === 0) {
+                MessageToast.show("Please select at least one skill to delete.");
+                return;
+            }
+
+            // Collect indices to delete. Iterate backwards to avoid index shifting issues
+            // when splicing directly from the array bound to the model.
+            for (var i = aSelectedItems.length - 1; i >= 0; i--) {
+                var oSelectedItem = aSelectedItems[i];
+                // Get the binding context FOR THE 'skillsModel'
+                var oBindingContext = oSelectedItem.getBindingContext("skillsModel");
+
+                if (oBindingContext) {
+                    var sPath = oBindingContext.getPath(); // This will be like "/0", "/1", etc.
+                    var iIndexToDelete = parseInt(sPath.substring(sPath.lastIndexOf('/') + 1));
+
+                    // Remove the item from the JavaScript array
+                    aSkillsData.splice(iIndexToDelete, 1);
+                } else {
+                    console.warn("Could not get binding context for a selected item. Item:", oSelectedItem);
+                }
+            }
+
+            // 3. Update the model with the modified array.
+            // This will trigger a refresh of the table.
+            oSkillsModel.setProperty("/", aSkillsData); // Or oSkillsModel.setData(aSkillsData); if you used getData()
+
+            // 4. Clear selections from the table
+            oTable.removeSelections(true); // Pass true to suppress the selectionChange event
+
+            MessageToast.show(aSelectedItems.length + " skill(s) deleted.");
         }
+
+        // ... other functions like onAddCreate, onInputChangeForId etc. ...
     });
 });

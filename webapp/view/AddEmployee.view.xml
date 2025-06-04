@@ -56,17 +56,21 @@
           </form:content>
         </form:SimpleForm>
 
-        <Panel id="panelSkills" headerText="Skills">
-              <HBox id="_IDGenHBox" justifyContent="End" width="100%">
-                <Button text="Add" id="button0" press=".onAddItem"/>
-                <Button text="Delete" id="button1" press=""/>
-              </HBox>    
+        <Panel id="panelSkills" headerText="Skills"> 
 
               <Table id="listEmployee"
                   items="{skillsModel>/}"
                   selectionChange="onSelectEmployee"
                   mode="MultiSelect"
                   inset="false">
+
+                <headerToolbar>
+                    <OverflowToolbar id="skillTableToolbar">
+                        <ToolbarSpacer id="spacerBeforeButtons"/>
+                        <Button text="Add" id="buttonAddSkill" press=".onAddItem"/>
+                        <Button text="Delete" id="buttonDeleteSelectedSkills" press=".onDeleteEmployeeSkill"/>
+                    </OverflowToolbar>
+                </headerToolbar>  
 
                   <columns>
                       
@@ -99,7 +103,7 @@
           <OverflowToolbar id="idOFTFooter">
             <ToolbarSpacer id="idTSpacerFooter" />
             <Button id="idBtnSave" text="Save" press=".onAddCreate"/>
-            <Button id="idBtnCancel" text="Cancel"/>
+            <Button id="idBtnCancel" text="Cancel" />
           </OverflowToolbar>
         </footer>                
     </Page>
