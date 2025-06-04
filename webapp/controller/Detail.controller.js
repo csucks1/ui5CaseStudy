@@ -52,6 +52,6 @@ sap.ui.define([
                 console.error("onEditPress: _sEmployeeId is not set. Cannot navigate to edit.");
             }
         }
-                   
+                
     });
 });
