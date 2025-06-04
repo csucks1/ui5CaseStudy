@@ -8,16 +8,16 @@
         <form:SimpleForm id="formEmployeeEdit" editable="true">
           <form:content>
             <Label id="lblEmployeeIdEdit" text="Employee Id" />
-            <Input id="inEmployeeIdEdit" value="{employeeModel>/EmployeeID}" editable="false"/>     
+            <Input id="inEmployeeIdEdit" value="" editable="false"/>     
 
             <Label id="lblFirstNameEdit" text="First Name"/>
-            <Input id="inFirstNameEdit" value="{employeeModel>/FirstName}" required="true" placeholder="Please enter a value" liveChange=".onInputChangeForId"/>
+            <Input id="inFirstNameEdit" value="" required="true" placeholder="Please enter a value" liveChange=".onInputChangeForId"/>
 
             <Label id="lblLastNameEdit" text="Last Name" />
-            <Input id="inLastNameEdit" value="{employeeModel>/LastName}" required="true" placeholder="Please enter a value" liveChange=".onInputChangeForId"/>
+            <Input id="inLastNameEdit" value="" required="true" placeholder="Please enter a value" liveChange=".onInputChangeForId"/>
 
             <Label id="lblAgeEdit" text="Age" />
-            <Input id="inAgeEdit" value="{employeeModel>/Age}" required="true" placeholder="Please enter a value"/>         
+            <Input id="inAgeEdit" value="" required="true" placeholder="Please enter a value"/>         
 
             <Label id="lblDateEdit" text="Date of Hire" />
             <DatePicker
@@ -85,8 +85,8 @@
                   <items>
                       <ColumnListItem id="_IDGenColumnListItemEdit">
                           <cells>
-                            <Text id="_IDGenText3Edit" text="{skillsModel>SkillName}" />
-                            <Text id="_IDGenText4Edit" text="{skillsModel>ProficiencyLevel}" />
+                            <Text id="_IDGenText3Edit" text="" />
+                            <Text id="_IDGenText4Edit" text="" />
                               
                           </cells>
                       </ColumnListItem>

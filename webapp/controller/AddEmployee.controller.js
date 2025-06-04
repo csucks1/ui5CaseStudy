@@ -16,7 +16,7 @@ sap.ui.define([
 
             if (oEmployeeIdInput) {
                 // Set initial value for Employee ID, make it non-editable
-                oEmployeeIdInput.setValue("TEST-"); // Initial prefix
+                oEmployeeIdInput.setValue("EmployeeID"); // Initial prefix
                 oEmployeeIdInput.setEditable(false);
             } else {
                 console.error("Input field with ID 'inEmployeeId' not found in onInit.");
@@ -149,7 +149,7 @@ sap.ui.define([
                     sMonth = String(month).padStart(2, '0'); // Ensure two digits, e.g., 01, 09, 12
                 }
             }            
-            const generatedId = "TEST-" + sFirstName + sLastName + sDay + sMonth;
+            const generatedId = "EmployeeID" + sFirstName + sLastName + sDay + sMonth;
             if (oEmployeeIdInput) {
                 oEmployeeIdInput.setValue(generatedId);
             }
