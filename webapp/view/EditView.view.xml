@@ -1,0 +1,106 @@
+<mvc:View controllerName="sapips.training.employeeapp.controller.EditView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"  
+    xmlns="sap.m">
+    <Page id="EditView" title="test">
+      <Panel id="panelEmployeeDetailsEdit" headerText="Edit Employee Details">
+        <form:SimpleForm id="formEmployeeEdit" editable="true">
+          <form:content>
+            <Label id="lblEmployeeIdEdit" text="Employee Id" />
+            <Input id="inEmployeeIdEdit" value="" editable="false"/>     
+
+            <Label id="lblFirstNameEdit" text="First Name"/>
+            <Input id="inFirstNameEdit" value="" required="true" placeholder="Please enter a value" liveChange=".onInputChangeForId"/>
+
+            <Label id="lblLastNameEdit" text="Last Name" />
+            <Input id="inLastNameEdit" value="" required="true" placeholder="Please enter a value" liveChange=".onInputChangeForId"/>
+
+            <Label id="lblAgeEdit" text="Age" />
+            <Input id="inAgeEdit" value="" required="true" placeholder="Please enter a value"/>         
+
+            <Label id="lblDateEdit" text="Date of Hire" />
+            <DatePicker
+              id="DP1Edit"
+              placeholder="Enter Date"
+              change=".onInputChangeForId"
+              class="sapUiSmallMarginBottom"
+              required="true"/> 
+
+             <Label id="lblCareerLevelEdit" text="Career Level" />
+            <ComboBox 
+              id="inCareerLevelEdit" 
+              width="100%" 
+              required="true" 
+              placeholder="Please enter a value"
+              value="{employeeModel>/CareerLevel}"
+              items="{/CareerList}">
+              <items>
+                    <core:Item id="_IDCLItemEdit" key="{CareerId}" text="{CareerLevel}" />
+              </items>
+            </ComboBox>
+
+            <Label id="lblCurrentProjectEdit" text="Current Project" />
+            <ComboBox 
+              id="inCurrentProjectEdit" 
+              width="100%" 
+              required="true" 
+              placeholder="Please enter a value"
+              change="onCurrentProjectChange"
+              value="{employeeModel>/CurrentProject}"
+              items="{/ProjectList}">
+              <items>
+                <core:Item id="_IDCPItemEdit" key="{ProjectId}" text="{ProjectName}" />
+              </items>
+            </ComboBox>                 
+          </form:content>
+        </form:SimpleForm>
+
+        <Panel id="panelSkillsEdit" headerText="Skills">
+              <HBox id="_IDGenHBoxEdit" justifyContent="End" width="100%">
+                <Button text="Add" id="button0Edit" press=".onAddItem"/>
+                <Button text="Delete" id="button1Edit" press=""/>
+              </HBox>    
+
+              <Table id="listEmployeeEdit"
+                  items="{skillsModel>/}"
+                  selectionChange="onSelectEmployee"
+                  mode="SingleSelectMaster"
+                  inset="false">
+
+                  <columns>
+                      
+                      <Column id="_IDGenColumnEdit">
+                          <Text id="_IDGenTextEdit" text="{i18n>productColumn}" />
+                      </Column>
+                      
+                      
+                      <Column id="_IDGenColumn1Edit">
+                          <Text id="_IDGenText1Edit" text="{i18n>supplierColumn}" />
+                      </Column>
+                      
+                  </columns>
+
+                  
+                  <items>
+                      <ColumnListItem id="_IDGenColumnListItemEdit">
+                          <cells>
+                            <Text id="_IDGenText3Edit" text="" />
+                            <Text id="_IDGenText4Edit" text="" />
+                              
+                          </cells>
+                      </ColumnListItem>
+                  </items>
+              </Table> 
+            
+        </Panel>                      
+      </Panel>
+        <footer>
+          <OverflowToolbar id="idOFTFooterEdit">
+            <ToolbarSpacer id="idTSpacerFooterEdit" />
+            <Button id="idBtnEditEdit" text="Edit" press=".onEdit"/>
+            <Button id="idBtnCancelEdit" text="Cancel"/>
+          </OverflowToolbar>
+        </footer>                
+    </Page>
+</mvc:View>

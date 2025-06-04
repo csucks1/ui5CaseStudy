@@ -3,7 +3,7 @@
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
   displayBlock="true">
-
+ 
   <Page id="employeePage" title="{i18n>title}">
     <content>
       <!-- Table for Employee List -->
@@ -13,22 +13,23 @@
         items="{/Employee}"
         growing="true"
         growingScrollToLoad="true">
-
+ 
         <!-- Header with Dynamic Employee Count and Search -->
         <headerToolbar>
           <Toolbar id="employeeToolbar">
-            <Text id="employeeCountText" text="search" class="sapUiTinyMarginBegin" />
-            <SearchField
+            <Text id="employeeCountText" text="Employee ()" class="sapUiTinyMarginBegin"/>
+            <ToolbarSpacer id="toolbarSpacer" />
+             <SearchField
               id="employeeSearchField"
               placeholder="Search by name"
               liveChange=".onSearch"
+              width="20%"
             />
-            <ToolbarSpacer id="toolbarSpacer" />
             <Button id="addButton" text="Add" icon="sap-icon://add" press=".onAddEmployee" />
             <Button id="deleteButton" text="Delete" icon="sap-icon://delete" press=".onDeleteEmployee" />
           </Toolbar>
         </headerToolbar>
-
+ 
         <!-- Table Columns -->
         <columns>
           <Column id="colID"><Text id="colIDText" text="ID" /></Column>
@@ -39,10 +40,11 @@
           <Column id="colCareer"><Text id="colCareerText" text="Career Level" /></Column>
           <Column id="colProject"><Text id="colProjectText" text="Current Project" /></Column>
         </columns>
-
+ 
         <!-- Table Rows -->
         <items>
-          <ColumnListItem id="employeeRowItem">
+          <ColumnListItem id="employeeRowItem"
+          type="Navigation" press=".onEmployeePress">
             <cells>
               <Text id="cellID" text="{EmployeeID}" />
               <Text id="cellFirstName" text="{FirstName}" />
