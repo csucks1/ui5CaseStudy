@@ -65,7 +65,7 @@
               <Table id="listEmployee"
                   items="{skillsModel>/}"
                   selectionChange="onSelectEmployee"
-                  mode="SingleSelectMaster"
+                  mode="MultiSelect"
                   inset="false">
 
                   <columns>
@@ -99,7 +99,6 @@
           <OverflowToolbar id="idOFTFooter">
             <ToolbarSpacer id="idTSpacerFooter" />
             <Button id="idBtnSave" text="Save" press=".onAddCreate"/>
-            <Button id="idBtnEdit" text="Edit" press=".onEdit"/>
             <Button id="idBtnCancel" text="Cancel"/>
           </OverflowToolbar>
         </footer>                
