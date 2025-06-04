@@ -95,13 +95,46 @@
           "target": [
             "TargetEmployeeList"
           ]
-        }
+        },
+        {
+          "name": "RouteAddEmployee",
+          "pattern": "RouteAddEmployee:?query:",
+          "target": [
+            "TargetAddEmployee"
+          ]
+        },
+        {
+          "name": "RouteDetailList",
+          "pattern": "RouteDetailList:?query:",
+          "target": [
+            "TargetDetailList"
+          ]
+        },
+        {
+          "name": "RouteEditEmployee",
+          "pattern": "RouteEditEmployee:?query:",
+          "target": [
+            "TargetEditList"
+          ]
+        }                  
       ],
       "targets": {
         "TargetEmployeeList": {
           "id": "EmployeeList",
           "name": "EmployeeList"
-        }
+        },
+        "TargetAddEmployee": {
+          "viewId": "AddEmployee",
+          "viewName": "AddEmployee"
+        },
+        "TargetDetailList": {
+          "viewId": "DetailList",
+          "viewName": "DetailList"
+        },
+        "TargetEditList": {
+          "viewId": "EditView",
+          "viewName": "EditView"
+        }        
       }
     },
     "rootView": {

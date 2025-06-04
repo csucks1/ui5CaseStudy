@@ -1,0 +1,37 @@
+<mvc:View controllerName="sapips.training.employeeapp.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"      
+    xmlns="sap.m">
+    <Page id="DetailList" title="details test">
+        <content>
+            <ObjectHeader
+                id="objectHeader"
+                responsive="true"
+                fullScreenOptimized="true"
+                title="FirstName 1 LastName 1"
+                intro="Employee ID: EmployeeId 1"
+                backgroundDesign="Translucent">
+                <attributes>
+                    <ObjectAttribute id="_IDGenObjectAttribute" title="Career Level" text="CL1" />
+                    <ObjectAttribute id="_IDGenObjectAttribute1" title="Current Project" text="ProjectName 1" />
+                </attributes>
+            </ObjectHeader>
+
+            <IconTabBar
+                id="idIconTabBar"
+                expanded="{device>/isNoPhone}"
+                expandable="false"
+                class="sapUiResponsiveContentPadding">
+            </IconTabBar>
+        </content>
+
+        <footer>
+            <OverflowToolbar id="footerToolbar">
+                <ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+                <Button id="editButton" text="Edit" type="Emphasized" press=".onEditPress" />
+                <Button id="cancelButton" text="Close" press=".onNavBack" />
+            </OverflowToolbar>
+        </footer>          
+    </Page>
+</mvc:View>
