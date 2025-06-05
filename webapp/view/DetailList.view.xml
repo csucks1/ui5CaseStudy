@@ -55,8 +55,8 @@
                                 <items>
                                     <ColumnListItem id="idSkillListItem">
                                         <cells>
-                                            <Text id="idSkillsTable-skillText" text="{Skill}" />
-                                            <Text id="idSkillsTable-profText" text="{Proficiency}" />
+                                            <Text id="idSkillsTable-skillText" text="{SkilSkillName}" />
+                                            <Text id="idSkillsTable-profText" text="{ProficiencyLevel}" />
                                         </cells>
                                     </ColumnListItem>
                                 </items>
