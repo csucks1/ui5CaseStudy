@@ -105,7 +105,7 @@
         },
         {
           "name": "RouteDetailList",
-          "pattern": "RouteDetailList:?query:",
+          "pattern": "RouteDetailList/{EmployeeID}",
           "target": [
             "TargetDetailList"
           ]
