@@ -3,7 +3,7 @@
     xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"      
     xmlns="sap.m">
-    <Page id="DetailList" title="details test">
+    <Page id="DetailList" title="Employee App by " showNavButton="true" navButtonPress="onBack">
         <content>
             <ObjectHeader
                 id="objectHeader"

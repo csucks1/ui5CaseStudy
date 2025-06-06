@@ -51,7 +51,20 @@ sap.ui.define([
                 MessageToast.show("Cannot edit: Employee ID is not available.");
                 console.error("onEditPress: _sEmployeeId is not set. Cannot navigate to edit.");
             }
-        }
+        },
+
+        onBack : function () {
+			var sPreviousHash = History.getInstance().getPreviousHash();
+
+			//The history contains a previous entry
+			if (sPreviousHash !== undefined) {
+				window.history.go(-1);
+			} else {
+				// There is no history!
+				// replace the current hash with page 1 (will not add an history entry)
+				this.getOwnerComponent().getRouter().navTo("page1", null, true);
+			}
+		}
                 
     });
 });
