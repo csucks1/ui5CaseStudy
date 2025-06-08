@@ -112,7 +112,7 @@
         },
         {
           "name": "RouteEditEmployee",
-          "pattern": "RouteEditEmployee:?query:",
+          "pattern": "RouteEditEmployee/{EmployeeID}",
           "target": [
             "TargetEditList"
           ]

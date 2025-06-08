@@ -10,21 +10,27 @@
             <form:SimpleForm id="formEmployeeEdit" editable="true">
                 <form:content>
                     <Label id="lblEmployeeIdEdit" text="{i18n>employeeIdLabel}" />
-                    <Input id="inEmployeeIdEdit" value="" editable="false"/>
+                    <Input id="inEmployeeIdEdit" value="{EmployeeID}" editable="false"/>
 
                     <Label id="lblFirstNameEdit" text="{i18n>firstNameLabel}"/>
-                    <Input id="inFirstNameEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>
+                    <!-- <Input id="inFirstNameEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/> -->
+                    <Input id="inFirstNameEdit" value="{FirstName}" required="true" placeholder="{i18n>commonPlaceholder}" />
+
 
                     <Label id="lblLastNameEdit" text="{i18n>lastNameLabel}" />
-                    <Input id="inLastNameEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>
+                    <!-- <Input id="inLastNameEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/> -->
+                    <Input id="inLastNameEdit" value="{LastName}" required="true" placeholder="{i18n>commonPlaceholder}" />                    
 
                     <Label id="lblAgeEdit" text="{i18n>ageLabel}" />
-                    <Input id="inAgeEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}"/>
+                    <Input id="inAgeEdit" value="{Age}" required="true" placeholder="{i18n>commonPlaceholder}"/>
 
                     <Label id="lblDateEdit" text="{i18n>dateOfHireLabel}" />
                     <DatePicker
                         id="DP1Edit"
                         placeholder="{i18n>datePlaceholder}"
+                        value="{
+                            'path':'DateHire'
+                        }"                        
                         change=".onInputChangeForId"
                         class="sapUiSmallMarginBottom"
                         required="true"/>
@@ -35,7 +41,7 @@
                         width="100%"
                         required="true"
                         placeholder="{i18n>commonPlaceholder}"
-                        value="{employeeModel>/CareerLevel}"
+                        value="{CareerLevel}"
                         items="{/CareerList}">
                         <items>
                             <core:Item id="_IDCLItemEdit" key="{CareerId}" text="{CareerLevel}" />
@@ -49,7 +55,7 @@
                         required="true"
                         placeholder="{i18n>commonPlaceholder}"
                         change="onCurrentProjectChange"
-                        value="{employeeModel>/CurrentProject}"
+                        value="{CurrentProject}"
                         items="{/ProjectList}">
                         <items>
                             <core:Item id="_IDCPItemEdit" key="{ProjectId}" text="{ProjectName}" />
@@ -78,7 +84,7 @@
                         id="buttonDeleteSkillEdit"
                         text="{i18n>deleteButtonText}"
                         type="Reject"
-                        press=""/>
+                        press=".onDeleteEmployeeSkill"/>
                 </OverflowToolbar>
             </headerToolbar>
             <!-- The content tag holds the main content of the panel (the table). -->
@@ -86,7 +92,7 @@
                 <Table id="listEmployeeEdit"
                     items="{skillsModel>/}"
                     selectionChange="onSelectEmployee"
-                    mode="SingleSelectMaster"
+                    mode="MultiSelect"
                     inset="false">
                     <columns>
                         <Column id="_IDGenColumnEdit">
@@ -100,7 +106,7 @@
                         <ColumnListItem id="_IDGenColumnListItemEdit">
                             <cells>
                                 <Text id="_IDGenText3Edit" text="{skillsModel>SkillName}" />
-                                <Text id="_IDGenText4Edit" text="{skillsModel>ProficiencyLevel}" />
+                                <Text id="_IDGenText4Edit" text="{skillsModel>SkillId}" />
                             </cells>
                         </ColumnListItem>
                     </items>

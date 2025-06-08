@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/ui/model/json/JSONModel"
-], (Controller, MessageToast, Filter, FilterOperator, JSONModel) => {
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox"
+], (Controller, MessageToast, Filter, FilterOperator, JSONModel, MessageBox) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.AddEmployee", {
@@ -85,8 +86,43 @@ sap.ui.define([
             // Optional: If you want to clear validation state on live change
             // oEvent.getSource().setValueState("None");
         },
+
+        // queries
+        _onCreateQuery: function (oData, sEntity) {
+            //===================
+            // Create New Entry
+            //===================
+            //Get the Model
+            var oModel = this.getOwnerComponent().getModel();
+            // OData CREATE operation
+                oModel.create(sEntity, oData, {
+                    success: (data) => { // Arrow function
+                     
+                    },
+                    error: (oError) => { 
+                        console.error("Error creating employee:", oError);
+                    }
+                });
+        },
+
+        _onReadQuery: function (oSkillsModel, aFilter, sFilterUri) {
+            var oModel = this.getOwnerComponent().getModel();
+            
+            oModel.read(sFilterUri, {
+                filters: aFilter,
+                success: function(data){
+                    var aData = data.results;
+                    if (oSkillsModel) {
+                        oSkillsModel.setData(aData);
+                    }                                 
+                },
+                error: function(data){
+                    console.error("something wrong employee", data);
+                }
+            })
+        },
                 
-        onAddCreate: function () {
+        onAddCreate: async function () {
             var oView = this.getView();
             var firstName = oView.byId("inFirstName").getValue();
             var lastName = oView.byId("inLastName").getValue();
@@ -121,36 +157,27 @@ sap.ui.define([
                 MessageToast.show("Only entries from current project list are valid");
                 return;
             } else {
+                var oData = {
+                    FirstName: firstName,
+                    LastName: lastName,
+                    EmployeeID: oEmployeeIdInput,
+                    Age: age,
+                    DateHire: oDatePicker,
+                    CareerLevel: sValueCL ,
+                    CurrentProject: sValueCP
+                };
 
-            var oData = {
-                FirstName: firstName,
-                LastName: lastName,
-                EmployeeID: oEmployeeIdInput,
-                Age: age,
-                DateHire: oDatePicker,
-                CareerLevel: sValueCL ,
-                CurrentProject: sValueCP
-            };
+                var sEntity = "/Employee"
+                // onAddCreate function
+                try {
+                    await this._onCreateQuery(oData, sEntity);
+                    const oRouter = this.getOwnerComponent().getRouter();                     
+                    oRouter.navTo("RouteEmployeeList");
 
-            //===================
-            // Create New Entry
-            //===================
-            //Get the Model
-            var oModel = this.getOwnerComponent().getModel();
-            var sEntity = "/Employee"
-
-            // OData CREATE operation
-                oModel.create(sEntity, oData, {
-                    success: (data) => { // Arrow function
-                        MessageToast.show("Insert Successfully"); 
-                        const oRouter = this.getOwnerComponent().getRouter(); 
-                        oRouter.navTo("RouteEmployeeList");                       
-                    },
-                    error: (oError) => { 
-                        console.error("Error creating employee:", oError);
-                        MessageBox.error("Failed to create employee."); 
-                    }
-                });
+                } catch (oError) {
+                    console.log(oError);
+                    MessageToast.show("Failed to create employee. Please check the console for details.");
+                }                
             }     
         },
 
@@ -172,7 +199,7 @@ sap.ui.define([
         },  
 
         // add employee skills
-        onAddSkillsCreate: function () {
+        onAddSkillsCreate: async function () {
             const oView = this.getView();
             const oEmployeeIdInput = oView.byId("inEmployeeId").getValue();
 
@@ -196,76 +223,32 @@ sap.ui.define([
                     SkillName: sValueSkill,
                     ProficiencyLevel: sValueProficient
                 };
-            //===================
-            // Create New Entry
-            //===================
-            //Get the Model
-            var oModel = this.getOwnerComponent().getModel();
-            var sEntity = "/Skill"
+                var sEntity = "/Skill"    
+                const oView = this.getView();
+                const oSkillsModel = oView.getModel("skillsModel"); 
+                var aFilter = [];
+                aFilter.push(new Filter({
+                    path: "EmployeeeId",
+                    operator: FilterOperator.EQ,
+                    value1: oEmployeeIdInput
+                }));
+                // onAddCreate function
+                try {
+                    await this._onCreateQuery(oData, sEntity);
+                    await this._onReadQuery(oSkillsModel, aFilter, sEntity);
+                    this.getView().byId("idSkillDialog").close();
+                    MessageToast.show("Skills created successfully!");
 
-            // OData CREATE operation
-                oModel.create(sEntity, oData, {
-                    success: (data) => { // Arrow function
-                        MessageToast.show("Insert Successfully"); 
-                        // employee skill filter
-                        const oView = this.getView();
-                        const oSkillsModel = oView.getModel("skillsModel"); 
-                        var oModel = this.getOwnerComponent().getModel();
-                        var aFilter = [];
-                        aFilter.push(new Filter({
-                            path: "EmployeeeId",
-                            operator: FilterOperator.EQ,
-                            value1: oEmployeeIdInput
-                        }));
-            
-                        var sFilterUri = "/Skill"
-                        
-                        oModel.read(sFilterUri, {
-                            filters: aFilter,
-                            success: function(data){
-                                var aData = data.results;
-                                if (oSkillsModel) {
-                                    oSkillsModel.setData(aData);
-                                }                                 
-                            },
-                            error: function(data){
-                                console.error("something wrong employee", data);
-                            }
-                        })
-                        this.getView().byId("idSkillDialog").close();                                 
-                    },
-                    error: (oError) => { 
-                        console.error("Error creating employee:", oError);
-                        MessageBox.error("Failed to create employee."); 
-                    }
-                });                  
+                } catch (oError) {
+                    MessageBox.error("Failed to create employee. Please check the console for details.");
+                }            
             }
             
         },
 
-        onDeleteEmployeeSkill: function (oEvent) {
-            // 1. Get the 'skillsModel' specifically
-            var oSkillsModel = this.getView().getModel("skillsModel");
-
-            if (!oSkillsModel) {
-                MessageToast.show("Error: skillsModel not found!");
-                console.error("skillsModel not found. Ensure it's set on the view or a parent control.");
-                return;
-            }
-
-            // 2. Get the data array from the skillsModel
-            // Assuming skillsModel's root data IS the array of skills.
-            // If it's an object like { skills: [...] }, then use oSkillsModel.getProperty("/skills")
-            var aSkillsData = oSkillsModel.getProperty("/"); // Or oSkillsModel.getData();
-                                                          // getProperty("/") is often preferred for direct array models
-
-            if (!Array.isArray(aSkillsData)) {
-                 MessageToast.show("Error: Data in skillsModel is not an array!");
-                 console.error("skillsModel data is not an array:", aSkillsData);
-                 return;
-            }
-
-            var oTable = this.byId("listEmployee");
+        onDeleteEmployeeSkill: function () {
+            var oEmployeeIdInput = this.getView().byId("inEmployeeId").getValue();
+            var oTable = this.getView().byId("listEmployee");
             var aSelectedItems = oTable.getSelectedItems();
 
             if (aSelectedItems.length === 0) {
@@ -273,33 +256,61 @@ sap.ui.define([
                 return;
             }
 
-            // Collect indices to delete. Iterate backwards to avoid index shifting issues
-            // when splicing directly from the array bound to the model.
-            for (var i = aSelectedItems.length - 1; i >= 0; i--) {
-                var oSelectedItem = aSelectedItems[i];
-                // Get the binding context FOR THE 'skillsModel'
-                var oBindingContext = oSelectedItem.getBindingContext("skillsModel");
 
-                if (oBindingContext) {
-                    var sPath = oBindingContext.getPath(); // This will be like "/0", "/1", etc.
-                    var iIndexToDelete = parseInt(sPath.substring(sPath.lastIndexOf('/') + 1));
+            var oModel = this.getOwnerComponent().getModel();
 
-                    // Remove the item from the JavaScript array
-                    aSkillsData.splice(iIndexToDelete, 1);
-                } else {
-                    console.warn("Could not get binding context for a selected item. Item:", oSelectedItem);
+            // 3. Confirmation Dialog for good user experience
+            MessageBox.confirm("Are you sure you want to delete the selected skill(s)?", {
+                title: "Confirm Deletion",
+                onClose: function (sAction) {
+                    if (sAction === MessageBox.Action.OK) {
+                        // User confirmed, proceed with deletion
+                        var sEntity = "/Skill"    
+                        const oView = this.getView();
+                        const oSkillsModel = oView.getModel("skillsModel"); 
+                        var aFilter = [];
+                        aFilter.push(new Filter({
+                            path: "EmployeeeId",
+                            operator: FilterOperator.EQ,
+                            value1: oEmployeeIdInput
+                        }));                        
+                        try{
+                            this._performDelete(aSelectedItems, oModel);
+                            this._onReadQuery(oSkillsModel, aFilter, sEntity);
+                        } catch (oError) {
+
+                        }
+                    }
+                }.bind(this) // .bind(this) is crucial to keep the controller's context
+            });
+        },
+
+        _performDelete: function (aSelectedItems, oModel, sPath) {
+            aSelectedItems.forEach(function(oItem) {
+                const oSkillData = oItem.getBindingContext("skillsModel").getObject();
+        
+                const sEmployeeId = oSkillData.EmployeeeId;
+                const sSkillId = oSkillData.SkillId;       
+        
+                if (!sEmployeeId || !sSkillId) {
+                    console.error("Could not find key values for a selected skill. Please check property names.", oSkillData);
+                    return; 
                 }
-            }
-
-            // 3. Update the model with the modified array.
-            // This will trigger a refresh of the table.
-            oSkillsModel.setProperty("/", aSkillsData); // Or oSkillsModel.setData(aSkillsData); if you used getData()
-
-            // 4. Clear selections from the table
-            oTable.removeSelections(true); // Pass true to suppress the selectionChange event
-
-            MessageToast.show(aSelectedItems.length + " skill(s) deleted.");
-        }
+                // const sPath = "/Skill(EmployeeeId='" + sEmployeeId + "', SkillId='" + sSkillId + "')";
+                const sPath = "/Skill(SkillId='" + sSkillId + "')";                
+        
+                // 4. Call the remove function with the constructed path
+                oModel.remove(sPath, {
+                    success: function() {
+                        MessageToast.show("Skill deleted successfully.");
+                    },
+                    error: function(oError) {
+                        MessageBox.error("Failed to delete skill. The server responded with an error.");
+                        console.error("Error deleting item at path: " + sPath, oError);
+                    }
+                });
+            });
+        },
 
         // ... other functions like onAddCreate, onInputChangeForId etc. ...
     });

@@ -1,13 +1,18 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast"
-], (Controller, MessageToast) => {
+    "sap/m/MessageToast",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "sap/ui/model/json/JSONModel"    
+], (Controller, MessageToast, Filter, FilterOperator, JSONModel) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.DetailList", {
         onInit() {            
             const oRouter = this.getOwnerComponent().getRouter();
             const oRoute = oRouter.getRoute("RouteDetailList");
+            this.getView().setModel(new JSONModel([]), "skillsModel");  
+
             oRoute.attachPatternMatched(this._onObjectMatched, this);           
         },
 
@@ -21,6 +26,33 @@ sap.ui.define([
 
                 const sPath = "/Employee('" + sEmployeeID + "')";
                 this.getView().bindElement({ path: sPath });
+
+                // filter skills 
+                const oView = this.getView();
+                const oSkillsModel = oView.getModel("skillsModel"); 
+                var oModel = this.getOwnerComponent().getModel();
+
+                var aFilter = [];
+                aFilter.push(new Filter({
+                    path: "EmployeeeId",
+                    operator: FilterOperator.EQ,
+                    value1: sEmployeeID
+                }));
+    
+                var sFilterUri = "/Skill"
+                
+                oModel.read(sFilterUri, {
+                    filters: aFilter,
+                    success: function(data){
+                        var aData = data.results;
+                        if (oSkillsModel) {
+                            oSkillsModel.setData(aData);
+                        }                                 
+                    },
+                    error: function(data){
+                        console.error("something wrong employee", data);
+                    }
+                })                
             } else {
                 MessageToast.show("Employee ID not found.");
                 console.error("DetailList: EmployeeID not found in route arguments.", oArguments);
@@ -28,14 +60,14 @@ sap.ui.define([
 
         },
 
-        onEditPress: function () {
+        onEditPress: function (oEvent) {
             if (this._sEmployeeId) { 
-                const oRouter = this.getOwnerComponent().getRouter();
-                oRouter.navTo("RouteEditEmployee", {
-                    query: {
-                        employeeId: this._sEmployeeId,
-                        isEdit: true
-                    }
+                var oSelectedItem = oEvent.getSource();
+                var oContext = oSelectedItem.getBindingContext();
+                var sEmployeeID = oContext.getProperty("EmployeeID");
+              
+                this.getOwnerComponent().getRouter().navTo("RouteEditEmployee", {
+                  EmployeeID: sEmployeeID
                 });
             } else {
                 MessageToast.show("Cannot edit: Employee ID is not available.");
