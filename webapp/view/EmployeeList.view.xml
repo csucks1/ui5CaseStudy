@@ -4,47 +4,60 @@
   xmlns="sap.m"
   displayBlock="true">
  
-  <Page id="employeePage" title="{i18n>title}">
+  <!-- This Page is the main container for the view. -->
+  <Page id="employeePage" title="{i18n>employeeListPageTitle}">
     <content>
-      <!-- Table for Employee List -->
+      <!-- This Table displays the list of all employees. -->
       <Table
         id="employeeTable"
         mode="MultiSelect"
         items="{/Employee}"
         growing="true"
-        growingScrollToLoad="true">
+        growingScrollToLoad="true"
+        updateFinished=".onUpdateFinished"> 
  
-        <!-- Header with Dynamic Employee Count and Search -->
+        <!-- The headerToolbar is the bar at the top of the table. -->
         <headerToolbar>
           <Toolbar id="employeeToolbar">
-            <Text id="employeeCountText" text="Employee ()" class="sapUiTinyMarginBegin"/>
+            <!-- This Text shows the number of employees. It is updated by the controller. -->
+            <Text id="employeeCountText" class="sapUiTinyMarginBegin"/>
+
+            <!-- This ToolbarSpacer pushes the search and buttons to the right. -->
             <ToolbarSpacer id="toolbarSpacer" />
+
+            <!-- This SearchField lets users filter the table by name. -->
              <SearchField
               id="employeeSearchField"
-              placeholder="Search by name"
+              placeholder="{i18n>searchPlaceholder}"
               liveChange=".onSearch"
               width="20%"
             />
-            <Button id="addButton" text="Add" icon="sap-icon://add" press=".onAddEmployee" />
-            <Button id="deleteButton" text="Delete" icon="sap-icon://delete" press=".onDeleteEmployee" />
+
+            <!-- This Button navigates to the page for adding a new employee. -->
+            <Button id="addButton" text="{i18n>addButtonText}" icon="sap-icon://add" press=".onAddEmployee" />
+
+            <!-- This Button deletes selected employees. The type="Reject" makes it appear red. -->
+            <Button id="deleteButton" text="{i18n>deleteButtonText}" icon="sap-icon://delete" press=".onDeleteEmployee" type="Reject"/>
           </Toolbar>
         </headerToolbar>
  
-        <!-- Table Columns -->
+        <!-- The columns aggregation defines the headers for the table. -->
         <columns>
-          <Column id="colID"><Text id="colIDText" text="ID" /></Column>
-          <Column id="colFirstName"><Text id="colFirstNameText" text="First Name" /></Column>
-          <Column id="colLastName"><Text id="colLastNameText" text="Last Name" /></Column>
-          <Column id="colAge"><Text id="colAgeText" text="Age" /></Column>
-          <Column id="colHireDate"><Text id="colHireDateText" text="Date of Hire" /></Column>
-          <Column id="colCareer"><Text id="colCareerText" text="Career Level" /></Column>
-          <Column id="colProject"><Text id="colProjectText" text="Current Project" /></Column>
+          <Column id="colID"><Text id="colIDText" text="{i18n>idColumnHeader}" /></Column>
+          <Column id="colFirstName"><Text id="colFirstNameText" text="{i18n>firstNameColumnHeader}" /></Column>
+          <Column id="colLastName"><Text id="colLastNameText" text="{i18n>lastNameColumnHeader}" /></Column>
+          <Column id="colAge"><Text id="colAgeText" text="{i18n>ageColumnHeader}" /></Column>
+          <Column id="colHireDate"><Text id="colHireDateText" text="{i18n>dateOfHireColumnHeader}" /></Column>
+          <Column id="colCareer"><Text id="colCareerText" text="{i1e8n>careerLevelColumnHeader}" /></Column>
+          <Column id="colProject"><Text id="colProjectText" text="{i18n>currentProjectColumnHeader}" /></Column>
         </columns>
  
-        <!-- Table Rows -->
+        <!-- The items aggregation defines the template for each row in the table. -->
         <items>
           <ColumnListItem id="employeeRowItem"
-          type="Navigation" press=".onEmployeePress">
+            type="Navigation"
+            press=".onEmployeePress">
+            <!-- The cells contain the data for each column in the row. -->
             <cells>
               <Text id="cellID" text="{EmployeeID}" />
               <Text id="cellFirstName" text="{FirstName}" />

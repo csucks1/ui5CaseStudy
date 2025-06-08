@@ -3,108 +3,114 @@
     xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"  
     xmlns="sap.m">
-    <Page id="AddEmployee" title="test">
-      <Panel id="panelEmployeeDetails" headerText="Create Employee Details">
-        <form:SimpleForm id="formEmployee" editable="true">
-          <form:content>
-            <Label id="lblEmployeeId" text="Employee Id" />
-            <Input id="inEmployeeId" value="{employeeModel>/EmployeeID}" editable="false"/>     
+    <Page id="AddEmployee" title="{i18n>addEmployeePageTitle}">
 
-            <Label id="lblFirstName" text="First Name"/>
-            <Input id="inFirstName" value="{employeeModel>/FirstName}" required="true" placeholder="Please enter a value" liveChange=".onInputChangeForId"/>
+        <!-- This Panel contains the form for employee information. -->
+        <Panel id="panelEmployeeDetails" headerText="{i18n>createEmployeeDetailsPanelHeader}">
+            <form:SimpleForm id="formEmployee" editable="true">
+                <form:content>
+                    <Label id="lblEmployeeId" text="{i18n>employeeIdLabel}" />
+                    <Input id="inEmployeeId" value="{employeeModel>/EmployeeID}" editable="false"/>
 
-            <Label id="lblLastName" text="Last Name" />
-            <Input id="inLastName" value="{employeeModel>/LastName}" required="true" placeholder="Please enter a value" liveChange=".onInputChangeForId"/>
+                    <Label id="lblFirstName" text="{i18n>firstNameLabel}"/>
+                    <Input id="inFirstName" value="{employeeModel>/FirstName}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>
 
-            <Label id="lblAge" text="Age" />
-            <Input id="inAge" value="{employeeModel>/Age}" required="true" placeholder="Please enter a value"/>         
+                    <Label id="lblLastName" text="{i18n>lastNameLabel}" />
+                    <Input id="inLastName" value="{employeeModel>/LastName}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>
 
-            <Label id="lblDate" text="Date of Hire" />
-            <DatePicker
-              id="DP1"
-              placeholder="Enter Date"
-              change=".onInputChangeForId"
-              class="sapUiSmallMarginBottom"
-              required="true"/> 
+                    <Label id="lblAge" text="{i18n>ageLabel}" />
+                    <Input id="inAge" value="{employeeModel>/Age}" required="true" placeholder="{i18n>commonPlaceholder}"/>
 
-             <Label id="lblCareerLevel" text="Career Level" />
-            <ComboBox 
-              id="inCareerLevel" 
-              width="100%" 
-              required="true" 
-              placeholder="Please enter a value"
-              value="{employeeModel>/CareerLevel}"
-              items="{/CareerList}">
-              <items>
-                    <core:Item id="_IDCLItem" key="{CareerId}" text="{CareerLevel}" />
-              </items>
-            </ComboBox>
+                    <Label id="lblDate" text="{i18n>dateOfHireLabel}" />
+                    <DatePicker
+                        id="DP1"
+                        placeholder="{i18n>datePlaceholder}"
+                        change=".onInputChangeForId"
+                        class="sapUiSmallMarginBottom"
+                        required="true"/>
 
-            <Label id="lblCurrentProject" text="Current Project" />
-            <ComboBox 
-              id="inCurrentProject" 
-              width="100%" 
-              required="true" 
-              placeholder="Please enter a value"
-              change="onCurrentProjectChange"
-              value="{employeeModel>/CurrentProject}"
-              items="{/ProjectList}">
-              <items>
-                <core:Item id="_IDCPItem" key="{ProjectId}" text="{ProjectName}" />
-              </items>
-            </ComboBox>                 
-          </form:content>
-        </form:SimpleForm>
+                    <Label id="lblCareerLevel" text="{i18n>careerLevelLabel}" />
+                    <ComboBox 
+                        id="inCareerLevel" 
+                        width="100%" 
+                        required="true" 
+                        placeholder="{i18n>commonPlaceholder}"
+                        value="{employeeModel>/CareerLevel}"
+                        items="{/CareerList}">
+                        <items>
+                            <core:Item id="_IDCLItem" key="{CareerId}" text="{CareerLevel}" />
+                        </items>
+                    </ComboBox>
 
-        <Panel id="panelSkills" headerText="Skills"> 
+                    <Label id="lblCurrentProject" text="{i18n>currentProjectLabel}" />
+                    <ComboBox 
+                        id="inCurrentProject" 
+                        width="100%" 
+                        required="true" 
+                        placeholder="{i18n>commonPlaceholder}"
+                        change="onCurrentProjectChange"
+                        value="{employeeModel>/CurrentProject}"
+                        items="{/ProjectList}">
+                        <items>
+                            <core:Item id="_IDCPItem" key="{ProjectId}" text="{ProjectName}" />
+                        </items>
+                    </ComboBox>
+                </form:content>
+            </form:SimpleForm>
+        </Panel>
 
-              <Table id="listEmployee"
-                  items="{skillsModel>/}"
-                  selectionChange="onSelectEmployee"
-                  mode="MultiSelect"
-                  inset="false">
+        <!-- This Panel displays the skills table. -->
+        <Panel id="panelSkills">
+            <!-- The headerToolbar defines the content of the panel's header. -->
+            <headerToolbar>
+                <OverflowToolbar id="skillsHeaderToolbarAdd">
+                    <!-- This Title displays the header text. -->
+                    <Title id="titleSkillsPanelAdd" text="{i18n>skillsPanelHeader}" />
+                    
+                    <!-- This ToolbarSpacer creates space between the title and the buttons. -->
+                    <ToolbarSpacer id="spacerSkillsHeaderAdd" />
 
-                <headerToolbar>
-                    <OverflowToolbar id="skillTableToolbar">
-                        <ToolbarSpacer id="spacerBeforeButtons"/>
-                        <Button text="Add" id="buttonAddSkill" press=".onAddItem"/>
-                        <Button text="Delete" id="buttonDeleteSelectedSkills" press=".onDeleteEmployeeSkill"/>
-                    </OverflowToolbar>
-                </headerToolbar>  
+                    <!-- This Button is for adding a skill. -->
+                    <Button text="{i18n>addButtonText}" id="buttonAddSkill" press=".onAddItem"/>
 
-                  <columns>
-                      
-                      <Column id="_IDGenColumn">
-                          <Text id="_IDGenText" text="{i18n>productColumn}" />
-                      </Column>
-                      
-                      
-                      <Column id="_IDGenColumn1">
-                          <Text id="_IDGenText1" text="{i18n>supplierColumn}" />
-                      </Column>
-                      
-                  </columns>
+                    <!-- This Button is for deleting skills. The type="Reject" makes it appear red. -->
+                    <Button id="buttonDeleteSelectedSkills" text="{i18n>deleteButtonText}" type="Reject" press=".onDeleteEmployeeSkill"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <!-- The content tag holds the main content of the panel. -->
+            <content>
+                <Table id="listEmployee"
+                    items="{skillsModel>/}"
+                    selectionChange="onSelectEmployee"
+                    mode="MultiSelect"
+                    inset="false">
+                    <columns>
+                        <Column id="_IDGenColumn">
+                            <Text id="_IDGenText" text="{i18n>skillNameColumn}" />
+                        </Column>
+                        <Column id="_IDGenColumn1">
+                            <Text id="_IDGenText1" text="{i18n>proficiencyLevelColumn}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem id="_IDGenColumnListItem">
+                            <cells>
+                                <Text id="_IDGenText3" text="{skillsModel>SkillName}" />
+                                <Text id="_IDGenText4" text="{skillsModel>ProficiencyLevel}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table> 
+            </content>
+        </Panel>
 
-                  
-                  <items>
-                      <ColumnListItem id="_IDGenColumnListItem">
-                          <cells>
-                            <Text id="_IDGenText3" text="{skillsModel>SkillName}" />
-                            <Text id="_IDGenText4" text="{skillsModel>ProficiencyLevel}" />
-                              
-                          </cells>
-                      </ColumnListItem>
-                  </items>
-              </Table> 
-            
-        </Panel>                      
-      </Panel>
+        <!-- The footer contains the action buttons for the entire page. -->
         <footer>
-          <OverflowToolbar id="idOFTFooter">
-            <ToolbarSpacer id="idTSpacerFooter" />
-            <Button id="idBtnSave" text="Save" press=".onAddCreate"/>
-            <Button id="idBtnCancel" text="Cancel" />
-          </OverflowToolbar>
-        </footer>                
+            <OverflowToolbar id="idOFTFooter">
+                <ToolbarSpacer id="idTSpacerFooter" />
+                <Button id="idBtnSave" text="{i18n>saveButtonText}" press=".onAddCreate"/>
+                <Button id="idBtnCancel" text="{i18n>cancelButtonText}" />
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>
