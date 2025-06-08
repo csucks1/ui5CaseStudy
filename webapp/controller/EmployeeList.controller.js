@@ -33,12 +33,12 @@ sap.ui.define([
         },
 
         onEmployeePress: function (oEvent) {
-            let employeeId = oEvent.getSource().getBindingContext().getObject().EmployeeID
-            var oRouter = this.getOwnerComponent().getRouter();        
-            oRouter.navTo("RouteDetailList", {
-                query: {
-                    employeeId: employeeId
-                }
+            var oSelectedItem = oEvent.getSource();
+            var oContext = oSelectedItem.getBindingContext();
+            var sEmployeeID = oContext.getProperty("EmployeeID");
+          
+            this.getOwnerComponent().getRouter().navTo("RouteDetailList", {
+              EmployeeID: sEmployeeID
             });
         }
     });
