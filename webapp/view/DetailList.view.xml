@@ -1,37 +1,155 @@
-<mvc:View controllerName="sapips.training.employeeapp.controller.Detail"
+<mvc:View
+    controllerName="sapips.training.employeeapp.controller.Detail"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns:form="sap.ui.layout.form"
-    xmlns:core="sap.ui.core"      
-    xmlns="sap.m">
-    <Page id="DetailList" title="Employee App by " showNavButton="true" navButtonPress="onBack">
+    xmlns:layout="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+>
+    <Page
+        id="detailPage"
+        showHeader="true"
+        title="{= ${employeeModel>/FirstName} + ' ' + ${employeeModel>/LastName} }"
+        showNavButton="true"
+        navButtonPress="onBack" >
+    
         <content>
-            <ObjectHeader
-                id="objectHeader"
-                responsive="true"
-                fullScreenOptimized="true"
-                title="FirstName 1 LastName 1"
-                intro="Employee ID: EmployeeId 1"
-                backgroundDesign="Translucent">
-                <attributes>
-                    <ObjectAttribute id="_IDGenObjectAttribute" title="Career Level" text="CL1" />
-                    <ObjectAttribute id="_IDGenObjectAttribute1" title="Current Project" text="ProjectName 1" />
-                </attributes>
-            </ObjectHeader>
+            <!-- Custom Header -->
+            <VBox id="idVBoxHeader" class="sapUiSmallMargin">
+                <Title
+                    id="idTitleEmpName"
+                    text="{= ${employeeModel>/FirstName} + ' ' + ${employeeModel>/LastName} }"
+                    level="H2"
+                />
+                <Text
+                    id="idTextCareerLevel"
+                    text="Career Level: {employeeModel>/CareerLevel}"
+                />
+            </VBox>
 
-            <IconTabBar
-                id="idIconTabBar"
-                expanded="{device>/isNoPhone}"
-                expandable="false"
-                class="sapUiResponsiveContentPadding">
+            <!-- Tabs -->
+            <IconTabBar id="detailTabBar" 
+                        class="sapUiResponsiveContentPadding"                        
+                        expandable="false" headerMode="Inline">
+                <items>
+                    <!-- Tab 1: Employee Info -->
+                    <IconTabFilter
+                        id="employeeInfoTab"
+                        text="Employee Info"
+                        key="info"
+                        icon="sap-icon://employee" >
+                        <VBox id="employeeInfoVBox" class="sapUiSmallMargin">
+                            <Title id="employeeInfoTitle" text="Employee Info" level="H3" />
+
+                            <layout:Form id="employeeInfoForm" editable="false">
+                                <layout:layout>
+                                    <layout:ResponsiveGridLayout id="idResponsiveLayout" />
+                                </layout:layout>
+
+                                <layout:formContainers>
+                                    <layout:FormContainer id="idFormContainer">
+                                        <layout:formElements>
+
+                                            <layout:FormElement id="idFormElementEmpId" label="Employee ID">
+                                                <layout:fields>
+                                                    <Text id="idTextEmpId" text="{employeeModel>/EmployeeID}" />
+                                                </layout:fields>
+                                            </layout:FormElement>
+
+                                            <layout:FormElement id="idFormElementFirstName" label="First Name">
+                                                <layout:fields>
+                                                    <Text id="idTextFirstName" text="{employeeModel>/FirstName}" />
+                                                </layout:fields>
+                                            </layout:FormElement>
+
+                                            <layout:FormElement id="idFormElementLastName" label="Last Name">
+                                                <layout:fields>
+                                                    <Text id="idTextLastName" text="{employeeModel>/LastName}" />
+                                                </layout:fields>
+                                            </layout:FormElement>
+
+                                            <layout:FormElement id="idFormElementAge" label="Age">
+                                                <layout:fields>
+                                                    <Text id="idTextAge" text="{employeeModel>/Age}" />
+                                                </layout:fields>
+                                            </layout:FormElement>
+
+                                            <layout:FormElement id="idFormElementDateOfHire" label="Date of Hire">
+                                                <layout:fields>
+                                                    <Text id="idTextDateOfHire" text="{employeeModel>/DateHire}" />
+                                                </layout:fields>
+                                            </layout:FormElement>
+
+                                            <layout:FormElement id="idFormElementCareerLevel" label="Career Level">
+                                                <layout:fields>
+                                                    <Text id="idTextCareerLevel2" text="{employeeModel>/CareerLevel}" />
+                                                </layout:fields>
+                                            </layout:FormElement>
+
+                                            <layout:FormElement id="idFormElementCurrentProject" label="Current Project">
+                                                <layout:fields>
+                                                    <Text id="idTextCurrentProject" text="{employeeModel>/CurrentProject}" />
+                                                </layout:fields>
+                                            </layout:FormElement>
+
+                                        </layout:formElements>
+                                    </layout:FormContainer>
+                                </layout:formContainers>
+                            </layout:Form>
+                        </VBox>
+                    </IconTabFilter>
+
+                    <!-- Tab 2: Skills -->
+                    <IconTabFilter
+                        id="skillsTab"
+                        text="Skills"
+                        key="skills"
+                        icon="sap-icon://competitor"
+                    >
+                        <VBox id="skillsVBox" class="sapUiSmallMargin">
+                            <Table
+                                id="skillsTable"
+                                items="{employeeModel>/Skills}"
+                            >
+                                <columns>
+                                    <Column id="idColumnSkill">
+                                        <Text id="idHeaderSkill" text="Skill" />
+                                    </Column>
+                                    <Column id="idColumnProficiency">
+                                        <Text id="idHeaderProficiency" text="Proficiency" />
+                                    </Column>
+                                </columns>
+
+                                <items>
+                                    <ColumnListItem id="idSkillItem">
+                                        <cells>
+                                            <Text id="idTextSkill" text="{employeeModel>Skill}" />
+                                            <Text id="idTextProficiency" text="{employeeModel>Proficiency}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </VBox>
+                    </IconTabFilter>
+                </items>
             </IconTabBar>
         </content>
 
         <footer>
-            <OverflowToolbar id="footerToolbar">
-                <ToolbarSpacer id="_IDGenToolbarSpacer1"/>
-                <Button id="editButton" text="Edit" type="Emphasized" press=".onEditPress" />
-                <Button id="cancelButton" text="Close" press=".onNavBack" />
-            </OverflowToolbar>
-        </footer>          
+            <Toolbar id="footerToolbar">
+                <ToolbarSpacer id="toolbarSpacer2" />
+                <Button
+                    id="editEmployeeButton"
+                    text="Edit"
+                    type="Emphasized"
+                    press="onEditEmployee"
+                />
+                <Button
+                    id="cancelButton"
+                    text="Cancel"
+                    press="onCancel"
+                />
+            </Toolbar>
+        </footer>
+
     </Page>
 </mvc:View>

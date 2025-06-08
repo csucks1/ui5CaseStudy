@@ -1,70 +1,73 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast"
-], (Controller, MessageToast) => {
+], (Controller, JSONModel, MessageToast) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.DetailList", {
-        onInit() {            
+
+        onInit: function () {
             const oRouter = this.getOwnerComponent().getRouter();
-            const oRoute = oRouter.getRoute("RouteDetailList");
-            oRoute.attachPatternMatched(this._onObjectMatched, this);               
+            oRouter.getRoute("RouteDetailList").attachPatternMatched(this._onObjectMatched, this);
         },
 
         _onObjectMatched: function (oEvent) {
-            // Get all arguments passed to the route
-            const oArguments = oEvent.getParameter("arguments");
+            const employeeId = oEvent.getParameter("arguments").employeeId;
 
-            // Query parameters are nested under a "?query" key within the arguments
-            const oQueryParameters = oArguments["?query"];
+            const oModel = this.getOwnerComponent().getModel("employeeData");
 
-            if (oQueryParameters && oQueryParameters.employeeId) {
-                this._sEmployeeId = oQueryParameters.employeeId; // Store the employeeId
-                console.log("Detail view loaded for employeeId:", this._sEmployeeId);
-
-                // Optional: If your view needs to be bound to a specific OData path
-                // based on this employeeId, you would do it here. For example:
-                // const sPath = `/YourEntitySet('${this._sEmployeeId}')`;
-                // this.getView().bindElement({ path: sPath });
-
-            } else {
-                // Handle the case where employeeId is not passed
-                MessageToast.show("Employee ID not found in URL parameters.");
-                console.error("DetailList: employeeId not found in query parameters.", oArguments);
-                // Optionally navigate back or to an error page
-                // this.getOwnerComponent().getRouter().navTo("RouteOverview", {}, true);
+            if (!oModel) {
+                console.error("employeeData model is not available.");
+                return;
             }
+
+            const employeeList = oModel.getProperty("/Employee");
+
+            if (Array.isArray(employeeList)) {
+                const employeeData = employeeList.find(emp => emp.EmployeeID === employeeId);
+
+                if (employeeData) {
+                    // Set the detail data to a new JSONModel for binding
+                    const oEmployeeModel = new JSONModel(employeeData);
+                    this.getView().setModel(oEmployeeModel, "employeeModel");
+
+                    // Set title manually (if needed)
+                    this.getView().byId("detailPage").setTitle(employeeData.FirstName + " " + employeeData.LastName);
+                } else {
+                    console.log("Employee not found.");
+                }
+            } else {
+                console.error("Employee list is not an array:", employeeList);
+            }
+
         },
 
-        onEditPress: function () {
-            if (this._sEmployeeId) { // Check if we have an employeeId
-                const oRouter = this.getOwnerComponent().getRouter();
-                oRouter.navTo("RouteEditEmployee", {
-                    // Pass the currently viewed employeeId as a query parameter
-                    // to the AddEmployee route
-                    query: {
-                        employeeId: this._sEmployeeId,
-                        isEdit: true
-                    }
-                });
-            } else {
-                MessageToast.show("Cannot edit: Employee ID is not available.");
-                console.error("onEditPress: _sEmployeeId is not set. Cannot navigate to edit.");
-            }
+        _getEmployeeDataById: function (oModel, employeeId) {
+            let employeeList = oModel.getProperty("/Employee");
+
+            // Find employee by employeeId
+            let employee = employeeList && employeeList.find(emp => emp.EmployeeID === employeeId);
+
+            return employee;
         },
 
-        onBack : function () {
-			var sPreviousHash = History.getInstance().getPreviousHash();
+        onBack: function () {
+            const oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteEmployeeList");  // Adjust if the route name is different
+        },
 
-			//The history contains a previous entry
-			if (sPreviousHash !== undefined) {
-				window.history.go(-1);
-			} else {
-				// There is no history!
-				// replace the current hash with page 1 (will not add an history entry)
-				this.getOwnerComponent().getRouter().navTo("page1", null, true);
-			}
-		}
-                
+        onEditEmployee: function () {
+            const oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteEditEmployee", {
+                employeeId: this.getView().getModel("employeeModel").getProperty("/EmployeeID")
+            });
+        },
+
+        onCancel: function () {
+            const oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteEmployeeList");
+        }
+
     });
 });

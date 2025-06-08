@@ -25,20 +25,20 @@
               liveChange=".onSearch"
               width="20%"
             />
-            <Button id="addButton" text="Add" icon="sap-icon://add" press=".onAddEmployee" />
+            <Button id="addButton"    text="Add"    icon="sap-icon://add"    press=".onAddEmployee" />
             <Button id="deleteButton" text="Delete" icon="sap-icon://delete" press=".onDeleteEmployee" />
           </Toolbar>
         </headerToolbar>
  
         <!-- Table Columns -->
         <columns>
-          <Column id="colID"><Text id="colIDText" text="ID" /></Column>
-          <Column id="colFirstName"><Text id="colFirstNameText" text="First Name" /></Column>
-          <Column id="colLastName"><Text id="colLastNameText" text="Last Name" /></Column>
-          <Column id="colAge"><Text id="colAgeText" text="Age" /></Column>
-          <Column id="colHireDate"><Text id="colHireDateText" text="Date of Hire" /></Column>
-          <Column id="colCareer"><Text id="colCareerText" text="Career Level" /></Column>
-          <Column id="colProject"><Text id="colProjectText" text="Current Project" /></Column>
+          <Column id="colID"><Text        id="colIDText"          text="ID" /></Column>
+          <Column id="colFirstName"><Text id="colFirstNameText"   text="First Name" /></Column>
+          <Column id="colLastName"><Text  id="colLastNameText"    text="Last Name" /></Column>
+          <Column id="colAge"><Text       id="colAgeText"         text="Age" /></Column>
+          <Column id="colHireDate"><Text  id="colHireDateText"    text="Date of Hire" /></Column>
+          <Column id="colCareer"><Text    id="colCareerText"      text="Career Level" /></Column>
+          <Column id="colProject"><Text   id="colProjectText"     text="Current Project" /></Column>
         </columns>
  
         <!-- Table Rows -->
@@ -46,13 +46,13 @@
           <ColumnListItem id="employeeRowItem"
           type="Navigation" press=".onEmployeePress">
             <cells>
-              <Text id="cellID" text="{EmployeeID}" />
-              <Text id="cellFirstName" text="{FirstName}" />
-              <Text id="cellLastName" text="{LastName}" />
-              <Text id="cellAge" text="{Age}" />
-              <Text id="cellHireDate" text="{DateHire}" />
-              <Text id="cellCareer" text="{CareerLevel}" />
-              <Text id="cellProject" text="{CurrentProject}" />
+              <Text id="cellID"         text="{EmployeeID}" />
+              <Text id="cellFirstName"  text="{FirstName}" />
+              <Text id="cellLastName"   text="{LastName}" />
+              <Text id="cellAge"        text="{Age}" />
+              <Text id="cellHireDate"   text="{DateHire}" />
+              <Text id="cellCareer"     text="{CareerLevel}" />
+              <Text id="cellProject"    text="{CurrentProject}" />
             </cells>
           </ColumnListItem>
         </items>
