@@ -10,65 +10,123 @@
                 <Key>
                     <PropertyRef Name="EmployeeID" />
                 </Key>
-                <Property Name="FirstName" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="First Name"/>
-                <Property Name="LastName" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Last Name"/>
-                <Property Name="EmployeeID" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Employee ID"/>
-                <Property Name="Age" Type="Edm.Int16" Nullable="true" sap:label="Age"/>
-                <Property Name="DateHire" Type="Edm.String" Nullable="true" sap:label="DateHire"/>
-                <Property Name="CareerLevel" Type="Edm.String" MaxLength="2" Nullable="true" sap:label="CareerLevel"/>
-                <Property Name="CurrentProject" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="CurrentProject"/>
+                <Property Name="EmployeeID" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="Employee ID" sap:filterable="true" sap:filter-restriction="case-sensitive"/>
+                <Property Name="FirstName" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="First Name" sap:filterable="true"/>
+                <Property Name="LastName" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Last Name" sap:filterable="true"/>
+                <Property Name="Age" Type="Edm.Int16" Nullable="true" sap:label="Age" sap:filterable="true"/>
+                <Property Name="DateHire" Type="Edm.String" Nullable="true" sap:label="Date Hired" sap:filterable="true"/>
+                <Property Name="CareerLevel" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Career Level ID" sap:filterable="true"/>
+                <Property Name="CurrentProject" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Project ID" sap:filterable="true"/>
+                
+                <!-- Navigation Properties -->
+                <NavigationProperty Name="ToSkills" Relationship="com.example.odata.EmployeeToSkill" FromRole="EmployeePrincipal" ToRole="SkillDependent"/>
+                <NavigationProperty Name="ToProject" Relationship="com.example.odata.EmployeeToProject" FromRole="EmployeePrincipal" ToRole="ProjectDependent"/>
+                <NavigationProperty Name="ToCareerLevel" Relationship="com.example.odata.EmployeeToCareer" FromRole="EmployeePrincipal" ToRole="CareerDependent"/>
             </EntityType>
 
             <EntityType Name="ProjectList">
                 <Key>
                     <PropertyRef Name="ProjectId" />
                 </Key>
-                <Property Name="ProjectId" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="ProjectId"/>
-                <Property Name="ProjectName" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="ProjectName"/>
+                <Property Name="ProjectId" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="Project ID"/>
+                <Property Name="ProjectName" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Project Name"/>
             </EntityType>
 
             <EntityType Name="Skill">
                 <Key>
                     <PropertyRef Name="EmployeeeId" />
+                    <PropertyRef Name="SkillId" />                    
                 </Key>
-                <Property Name="EmployeeeId" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="EmployeeeId"/>
-                <Property Name="SkillId" Type="Edm.String" MaxLength="10" Nullable="true" sap:label="SkillId"/>
-                <Property Name="ProficiencyID" Type="Edm.String" MaxLength="2" Nullable="true" sap:label="ProficiencyID"/>
-                <Property Name="SkillName" Type="Edm.String" MaxLength="20" Nullable="true" sap:label="SkillName"/>
-                <Property Name="ProficiencyLevel" Type="Edm.String" MaxLength="2" Nullable="true" sap:label="ProficiencyLevel"/>
+                <Property Name="EmployeeId" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="Employee ID"/>
+                <Property Name="SkillId" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="Skill ID"/>
+                <Property Name="ProficiencyID" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Proficiency ID"/>
+                <Property Name="SkillName" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Skill Name"/>
+                <Property Name="ProficiencyLevel" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Proficiency Level"/>
             </EntityType>
 
             <EntityType Name="ProficiencyList">
                 <Key>
                     <PropertyRef Name="ProficiencyId" />
                 </Key>
-                <Property Name="ProficiencyId" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="ProficiencyId"/>
-                <Property Name="ProficiencyLevel" Type="Edm.String" MaxLength="2" Nullable="true" sap:label="ProficiencyLevel"/>
+                <Property Name="ProficiencyId" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="Proficiency ID"/>
+                <Property Name="ProficiencyLevel" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Proficiency Level"/>
             </EntityType>
 
             <EntityType Name="SkillList">
                 <Key>
                     <PropertyRef Name="SkillId" />
                 </Key>
-                <Property Name="SkillId" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="SkillId"/>
-                <Property Name="SkillName" Type="Edm.String" MaxLength="20" Nullable="true" sap:label="SkillName"/>
+                <Property Name="SkillId" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="Skill ID"/>
+                <Property Name="SkillName" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Skill Name"/>
             </EntityType>
 
             <EntityType Name="CareerList">
                 <Key>
                     <PropertyRef Name="CareerId" />
                 </Key>
-                <Property Name="CareerId" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="CareerId"/>
-                <Property Name="CareerLevel" Type="Edm.String" MaxLength="2" Nullable="true" sap:label="CareerLevel"/>
+                <Property Name="CareerId" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="Career ID"/>
+                <Property Name="CareerLevel" Type="Edm.String" MaxLength="40" Nullable="true" sap:label="Career Level"/>
             </EntityType>
 
+            <!-- Associations for Navigation -->
+            <Association Name="EmployeeToSkill">
+                <End Type="com.example.odata.Employee" Multiplicity="1" Role="EmployeePrincipal"/>
+                <End Type="com.example.odata.Skill" Multiplicity="*" Role="SkillDependent"/>
+                <ReferentialConstraint>
+                    <Principal Role="EmployeePrincipal">
+                        <PropertyRef Name="EmployeeID"/>
+                    </Principal>
+                    <Dependent Role="SkillDependent">
+                        <PropertyRef Name="EmployeeId"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="EmployeeToProject">
+                <End Type="com.example.odata.Employee" Multiplicity="*" Role="EmployeePrincipal"/>
+                <End Type="com.example.odata.ProjectList" Multiplicity="1" Role="ProjectDependent"/>
+                 <ReferentialConstraint>
+                    <Principal Role="ProjectDependent">
+                        <PropertyRef Name="ProjectId"/>
+                    </Principal>
+                    <Dependent Role="EmployeePrincipal">
+                        <PropertyRef Name="CurrentProject"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="EmployeeToCareer">
+                <End Type="com.example.odata.Employee" Multiplicity="*" Role="EmployeePrincipal"/>
+                <End Type="com.example.odata.CareerList" Multiplicity="1" Role="CareerDependent"/>
+                <ReferentialConstraint>
+                    <Principal Role="CareerDependent">
+                        <PropertyRef Name="CareerId"/>
+                    </Principal>
+                    <Dependent Role="EmployeePrincipal">
+                        <PropertyRef Name="CareerLevel"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+
+
             <EntityContainer Name="MyEntities" m:IsDefaultEntityContainer="true">
-                <EntitySet Name="Employee" EntityType="com.example.odata.Employee" sap:label="Employees"/>
-                <EntitySet Name="ProjectList" EntityType="com.example.odata.ProjectList" sap:label="Project Lists"/>
-                <EntitySet Name="Skill" EntityType="com.example.odata.Skill" sap:label="Skills"/>
-                <EntitySet Name="ProficiencyList" EntityType="com.example.odata.ProficiencyList" sap:label="Proficiency Lists"/>
-                <EntitySet Name="SkillList" EntityType="com.example.odata.SkillList" sap:label="Skill Lists"/>
-                <EntitySet Name="CareerList" EntityType="com.example.odata.CareerList" sap:label="Career Lists"/>
+                <EntitySet Name="Employees" EntityType="com.example.odata.Employee"/>
+                <EntitySet Name="ProjectList" EntityType="com.example.odata.ProjectList"/>
+                <EntitySet Name="Skill" EntityType="com.example.odata.Skill"/>
+                <EntitySet Name="ProficiencyList" EntityType="com.example.odata.ProficiencyList"/>
+                <EntitySet Name="SkillList" EntityType="com.example.odata.SkillList"/>
+                <EntitySet Name="CareerList" EntityType="com.example.odata.CareerList"/>
+
+                <AssociationSet Name="Employee_Skills_AssocSet" Association="com.example.odata.EmployeeToSkill">
+                    <End EntitySet="Employees" Role="EmployeePrincipal"/>
+                    <End EntitySet="Skill" Role="SkillDependent"/>
+                </AssociationSet>
+                <AssociationSet Name="Employee_Project_AssocSet" Association="com.example.odata.EmployeeToProject">
+                    <End EntitySet="Employees" Role="EmployeePrincipal"/>
+                    <End EntitySet="ProjectList" Role="ProjectDependent"/>
+                </AssociationSet>
+                <AssociationSet Name="Employee_Career_AssocSet" Association="com.example.odata.EmployeeToCareer">
+                    <End EntitySet="Employees" Role="EmployeePrincipal"/>
+                    <End EntitySet="CareerList" Role="CareerDependent"/>
+                </AssociationSet>
             </EntityContainer>
 
         </Schema>

@@ -1,82 +1,12 @@
 [
-    {
-        "CareerId": "ClPZUFwqwg",
-        "CareerLevel": "C1"
-    },
-    {
-        "CareerId": "VvilsBWOAZ",
-        "CareerLevel": "C2"
-    },
-    {
-        "CareerId": "wFKYbOUGBh",
-        "CareerLevel": "C3"
-    },
-    {
-        "CareerId": "nBupSRgwpY",
-        "CareerLevel": "C4"
-    },
-    {
-        "CareerId": "uWPmItEulg",
-        "CareerLevel": "C5"
-    },
-    {
-        "CareerId": "YSUijJmNoJ",
-        "CareerLevel": "C6"
-    },
-    {
-        "CareerId": "KYxLEDLUXn",
-        "CareerLevel": "C7"
-    },
-    {
-        "CareerId": "QVbizXOUzk",
-        "CareerLevel": "C8"
-    },
-    {
-        "CareerId": "OVyhtJhEOr",
-        "CareerLevel": "C9"
-    },
-    {
-        "CareerId": "aVFOuAlSAz",
-        "CareerLevel": "10"
-    },
-    {
-        "CareerId": "UtBKakPmZA",
-        "CareerLevel": "11"
-    },
-    {
-        "CareerId": "jIGShBQofI",
-        "CareerLevel": "12"
-    },
-    {
-        "CareerId": "seeppntLUd",
-        "CareerLevel": "13"
-    },
-    {
-        "CareerId": "AGWdLQkHBd",
-        "CareerLevel": "14"
-    },
-    {
-        "CareerId": "aJopJuEObK",
-        "CareerLevel": "15"
-    },
-    {
-        "CareerId": "KYbqWppAzU",
-        "CareerLevel": "16"
-    },
-    {
-        "CareerId": "DkLHSsePWI",
-        "CareerLevel": "17"
-    },
-    {
-        "CareerId": "OgbjLKIvjY",
-        "CareerLevel": "18"
-    },
-    {
-        "CareerId": "FZyoMLqimY",
-        "CareerLevel": "19"
-    },
-    {
-        "CareerId": "eIpKZdcedn",
-        "CareerLevel": "20"
-    }
+    { "CareerId": "ClPZUFwqwg", "CareerLevel": "C1" },
+    { "CareerId": "VvilsBWOAZ", "CareerLevel": "C2" },
+    { "CareerId": "wFKYbOUGBh", "CareerLevel": "C3" },
+    { "CareerId": "nBupSRgwpY", "CareerLevel": "C4" },
+    { "CareerId": "uWPmItEulg", "CareerLevel": "C5" },
+    { "CareerId": "YSUijJmNoJ", "CareerLevel": "C6" },
+    { "CareerId": "KYxLEDLUXn", "CareerLevel": "C7" },
+    { "CareerId": "QVbizXOUzk", "CareerLevel": "C8" },
+    { "CareerId": "OVyhtJhEOr", "CareerLevel": "C9" },
+    { "CareerId": "aVFOuAlSAz", "CareerLevel": "10" }
 ]

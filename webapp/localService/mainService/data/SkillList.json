@@ -1,82 +1,19 @@
 [
-    {
-        "SkillId": "gpKSiOtOXJ",
-        "SkillName": "SkillName1"
-    },
-    {
-        "SkillId": "sbpYqgRreI",
-        "SkillName": "SkillName2"
-    },
-    {
-        "SkillId": "NewpFKEQGs",
-        "SkillName": "SkillName3"
-    },
-    {
-        "SkillId": "tiZNpZnmnb",
-        "SkillName": "SkillName4"
-    },
-    {
-        "SkillId": "vSQVRDvsbg",
-        "SkillName": "SkillName5"
-    },
-    {
-        "SkillId": "JTrFVJJkYB",
-        "SkillName": "SkillName6"
-    },
-    {
-        "SkillId": "pKriWAIJbz",
-        "SkillName": "SkillName7"
-    },
-    {
-        "SkillId": "eWeLkytSFq",
-        "SkillName": "SkillName8"
-    },
-    {
-        "SkillId": "kBZzCgjDrP",
-        "SkillName": "SkillName9"
-    },
-    {
-        "SkillId": "kNEIRBQnFt",
-        "SkillName": "SkillName10"
-    },
-    {
-        "SkillId": "BOdxXDGiVR",
-        "SkillName": "SkillName11"
-    },
-    {
-        "SkillId": "proofWmCuS",
-        "SkillName": "SkillName12"
-    },
-    {
-        "SkillId": "otxwYQDofT",
-        "SkillName": "SkillName13"
-    },
-    {
-        "SkillId": "fRUEKoJKst",
-        "SkillName": "SkillName14"
-    },
-    {
-        "SkillId": "UDzITIOIPW",
-        "SkillName": "SkillName15"
-    },
-    {
-        "SkillId": "yRxpxpSomQ",
-        "SkillName": "SkillName16"
-    },
-    {
-        "SkillId": "YryUmgWnkt",
-        "SkillName": "SkillName17"
-    },
-    {
-        "SkillId": "GZCmUqWMjs",
-        "SkillName": "SkillName18"
-    },
-    {
-        "SkillId": "HMouoDDRLL",
-        "SkillName": "SkillName19"
-    },
-    {
-        "SkillId": "aEJwULlafY",
-        "SkillName": "SkillName20"
-    }
+    { "SkillId": "gpKSiOtOXJ", "SkillName": "Project Management" },
+    { "SkillId": "sbpYqgRreI", "SkillName": "Java" },
+    { "SkillId": "NewpFKEQGs", "SkillName": "SQL" },
+    { "SkillId": "tiZNpZnmnb", "SkillName": "Python" },
+    { "SkillId": "vSQVRDvsbg", "SkillName": "Data Analysis" },
+    { "SkillId": "JTrFVJJkYB", "SkillName": "JavaScript" },
+    { "SkillId": "pKriWAIJbz", "SkillName": "UI/UX Design" },
+    { "SkillId": "eWeLkytSFq", "SkillName": "Figma" },
+    { "SkillId": "kBZzCgjDrP", "SkillName": "Cloud Computing (AWS)" },
+    { "SkillId": "kNEIRBQnFt", "SkillName": "System Architecture" },
+    { "SkillId": "BOdxXDGiVR", "SkillName": "Network Security" },
+    { "SkillId": "proofWmCuS", "SkillName": "React" },
+    { "SkillId": "otxwYQDofT", "SkillName": "Quality Assurance" },
+    { "SkillId": "fRUEKoJKst", "SkillName": "Automated Testing" },
+    { "SkillId": "UDzITIOIPW", "SkillName": "C#" },
+    { "SkillId": "yRxpxpSomQ", "SkillName": "HTML/CSS" },
+    { "SkillId": "YryUmgWnkt", "SkillName": "Content Management" }
 ]

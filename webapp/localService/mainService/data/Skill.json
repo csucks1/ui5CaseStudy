@@ -1,142 +1,19 @@
 [
-    {
-        "EmployeeeId": "cuJaKHlqxSCfoEknCMpcNWYcQYzFzxob",
-        "SkillId": "SkillId1",
-        "ProficiencyID": "P1",
-        "SkillName": "SkillName1",
-        "ProficiencyLevel": "P1"
-    },
-    {
-        "EmployeeeId": "XbiksLWhQLfUCkdvQKrLiXPcmmwaVjWH",
-        "SkillId": "SkillId2",
-        "ProficiencyID": "P2",
-        "SkillName": "SkillName2",
-        "ProficiencyLevel": "P2"
-    },
-    {
-        "EmployeeeId": "fKIiiiYstQLHbFGXLQlamqqIuaFMqwwQ",
-        "SkillId": "SkillId3",
-        "ProficiencyID": "P3",
-        "SkillName": "SkillName3",
-        "ProficiencyLevel": "P3"
-    },
-    {
-        "EmployeeeId": "LoNIyTXFsdOHmmpqkpNCOjqLAJDNsZKR",
-        "SkillId": "SkillId4",
-        "ProficiencyID": "P4",
-        "SkillName": "SkillName4",
-        "ProficiencyLevel": "P4"
-    },
-    {
-        "EmployeeeId": "kjZJdAinFSCAhNbrCEyrKcgyqjmwKUgM",
-        "SkillId": "SkillId5",
-        "ProficiencyID": "P5",
-        "SkillName": "SkillName5",
-        "ProficiencyLevel": "P5"
-    },
-    {
-        "EmployeeeId": "uKsdSsUfkeRZbgwnwWxKbTBFzqvseFZR",
-        "SkillId": "SkillId6",
-        "ProficiencyID": "P6",
-        "SkillName": "SkillName6",
-        "ProficiencyLevel": "P6"
-    },
-    {
-        "EmployeeeId": "ILpKwdmVZBbaMzaAvEtsJbhijZjEhejb",
-        "SkillId": "SkillId7",
-        "ProficiencyID": "P7",
-        "SkillName": "SkillName7",
-        "ProficiencyLevel": "P7"
-    },
-    {
-        "EmployeeeId": "MhkeIWNLvpotMlFeZUpPTrgaLPDalyvK",
-        "SkillId": "SkillId8",
-        "ProficiencyID": "P8",
-        "SkillName": "SkillName8",
-        "ProficiencyLevel": "P8"
-    },
-    {
-        "EmployeeeId": "lCxMTAxDmbvUtaBgkTwzrcLOmCzTpLFe",
-        "SkillId": "SkillId9",
-        "ProficiencyID": "P9",
-        "SkillName": "SkillName9",
-        "ProficiencyLevel": "P9"
-    },
-    {
-        "EmployeeeId": "qGZAInNmuAfCPPOQBWzLzuHPcTpmJFoh",
-        "SkillId": "SkillId10",
-        "ProficiencyID": "10",
-        "SkillName": "SkillName10",
-        "ProficiencyLevel": "10"
-    },
-    {
-        "EmployeeeId": "ZyiXpQHEQbxIRjNCmcNfpJuujlQlpvWq",
-        "SkillId": "SkillId11",
-        "ProficiencyID": "11",
-        "SkillName": "SkillName11",
-        "ProficiencyLevel": "11"
-    },
-    {
-        "EmployeeeId": "FYhFEDXQkJDQZngvxfFpwpUjpydYEukj",
-        "SkillId": "SkillId12",
-        "ProficiencyID": "12",
-        "SkillName": "SkillName12",
-        "ProficiencyLevel": "12"
-    },
-    {
-        "EmployeeeId": "fbwgsvygiwojXxqFKSGUGcOxPLolutFI",
-        "SkillId": "SkillId13",
-        "ProficiencyID": "13",
-        "SkillName": "SkillName13",
-        "ProficiencyLevel": "13"
-    },
-    {
-        "EmployeeeId": "EUXmlnrFTecrxBwsbwmLUPrSXQhxYrNv",
-        "SkillId": "SkillId14",
-        "ProficiencyID": "14",
-        "SkillName": "SkillName14",
-        "ProficiencyLevel": "14"
-    },
-    {
-        "EmployeeeId": "IMnQJkoHIsFCcDdCczCAApoEiMTWXeBs",
-        "SkillId": "SkillId15",
-        "ProficiencyID": "15",
-        "SkillName": "SkillName15",
-        "ProficiencyLevel": "15"
-    },
-    {
-        "EmployeeeId": "xhhfnzOBOpkUrISschnJJEolOlcwWuPV",
-        "SkillId": "SkillId16",
-        "ProficiencyID": "16",
-        "SkillName": "SkillName16",
-        "ProficiencyLevel": "16"
-    },
-    {
-        "EmployeeeId": "TpvTRMATXPIglktlXWRAHddjcpXsGRda",
-        "SkillId": "SkillId17",
-        "ProficiencyID": "17",
-        "SkillName": "SkillName17",
-        "ProficiencyLevel": "17"
-    },
-    {
-        "EmployeeeId": "MPmBLIxfGSXTsmxRNVzIxjXbWUkFRxNz",
-        "SkillId": "SkillId18",
-        "ProficiencyID": "18",
-        "SkillName": "SkillName18",
-        "ProficiencyLevel": "18"
-    },
-    {
-        "EmployeeeId": "eNGTVEBqolJYnPtfUiINCLGDiiRzvsqF",
-        "SkillId": "SkillId19",
-        "ProficiencyID": "19",
-        "SkillName": "SkillName19",
-        "ProficiencyLevel": "19"
-    },
-    {
-        "EmployeeeId": "vHWoWSlRzkUbvZysVJUAYkcTtBmelBoQ",
-        "SkillId": "SkillId20",
-        "ProficiencyID": "20",
-        "SkillName": "SkillName20",
-        "ProficiencyLevel": "20"
-    }
+    { "EmployeeId": "EmployeeIDJoseSantos", "SkillId": "gpKSiOtOXJ", "ProficiencyID": "IXkTRavTOq", "SkillName": "Project Management", "ProficiencyLevel": "P5" },
+    { "EmployeeId": "EmployeeIDJoseSantos", "SkillId": "sbpYqgRreI", "ProficiencyID": "NeqgGctTez", "SkillName": "Java", "ProficiencyLevel": "P4" },
+    { "EmployeeId": "EmployeeIDMariaReyes", "SkillId": "NewpFKEQGs", "ProficiencyID": "IXkTRavTOq", "SkillName": "SQL", "ProficiencyLevel": "P5" },
+    { "EmployeeId": "EmployeeIDMariaReyes", "SkillId": "tiZNpZnmnb", "ProficiencyID": "ivEhJkslFV", "SkillName": "Python", "ProficiencyLevel": "P3" },
+    { "EmployeeId": "EmployeeIDMariaReyes", "SkillId": "vSQVRDvsbg", "ProficiencyID": "NeqgGctTez", "SkillName": "Data Analysis", "ProficiencyLevel": "P4" },
+    { "EmployeeId": "EmployeeIDJuanDelaCruz", "SkillId": "JTrFVJJkYB", "ProficiencyID": "ivEhJkslFV", "SkillName": "JavaScript", "ProficiencyLevel": "P3" },
+    { "EmployeeId": "EmployeeIDAnnaGarcia", "SkillId": "pKriWAIJbz", "ProficiencyID": "NeqgGctTez", "SkillName": "UI/UX Design", "ProficiencyLevel": "P4" },
+    { "EmployeeId": "EmployeeIDAnnaGarcia", "SkillId": "eWeLkytSFq", "ProficiencyID": "IXkTRavTOq", "SkillName": "Figma", "ProficiencyLevel": "P5" },
+    { "EmployeeId": "EmployeeIDPaoloGonzales", "SkillId": "kBZzCgjDrP", "ProficiencyID": "NeqgGctTez", "SkillName": "Cloud Computing (AWS)", "ProficiencyLevel": "P4" },
+    { "EmployeeId": "EmployeeIDAngelicaRamos", "SkillId": "kNEIRBQnFt", "ProficiencyID": "IXkTRavTOq", "SkillName": "System Architecture", "ProficiencyLevel": "P5" },
+    { "EmployeeId": "EmployeeIDAngelicaRamos", "SkillId": "BOdxXDGiVR", "ProficiencyID": "NeqgGctTez", "SkillName": "Network Security", "ProficiencyLevel": "P4" },
+    { "EmployeeId": "EmployeeIDMiguelCastro", "SkillId": "proofWmCuS", "ProficiencyID": "vdOTphuWSs", "SkillName": "React", "ProficiencyLevel": "P2" },
+    { "EmployeeId": "EmployeeIDNoraAlonzo", "SkillId": "otxwYQDofT", "ProficiencyID": "NeqgGctTez", "SkillName": "Quality Assurance", "ProficiencyLevel": "P4" },
+    { "EmployeeId": "EmployeeIDNoraAlonzo", "SkillId": "fRUEKoJKst", "ProficiencyID": "ivEhJkslFV", "SkillName": "Automated Testing", "ProficiencyLevel": "P3" },
+    { "EmployeeId": "EmployeeIDEnriqueSantos", "SkillId": "UDzITIOIPW", "ProficiencyID": "ivEhJkslFV", "SkillName": "C#", "ProficiencyLevel": "P3" },
+    { "EmployeeId": "EmployeeIDLizaVilla", "SkillId": "yRxpxpSomQ", "ProficiencyID": "NeqgGctTez", "SkillName": "HTML/CSS", "ProficiencyLevel": "P4" },
+    { "EmployeeId": "EmployeeIDLizaVilla", "SkillId": "YryUmgWnkt", "ProficiencyID": "ivEhJkslFV", "SkillName": "Content Management", "ProficiencyLevel": "P3" }
 ]

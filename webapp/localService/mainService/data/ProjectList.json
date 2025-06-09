@@ -1,82 +1,12 @@
 [
-    {
-        "ProjectId": "vIKGcmrVew",
-        "ProjectName": "ProjectName1"
-    },
-    {
-        "ProjectId": "BkzXgXxpxm",
-        "ProjectName": "ProjectName2"
-    },
-    {
-        "ProjectId": "QURrWgbMrd",
-        "ProjectName": "ProjectName3"
-    },
-    {
-        "ProjectId": "ehObkpkRwc",
-        "ProjectName": "ProjectName4"
-    },
-    {
-        "ProjectId": "TthPZXSeST",
-        "ProjectName": "ProjectName5"
-    },
-    {
-        "ProjectId": "FEuuyFHJLq",
-        "ProjectName": "ProjectName6"
-    },
-    {
-        "ProjectId": "HGxdiEtgpK",
-        "ProjectName": "ProjectName7"
-    },
-    {
-        "ProjectId": "udmCMeevSM",
-        "ProjectName": "ProjectName8"
-    },
-    {
-        "ProjectId": "XqIskXDXZV",
-        "ProjectName": "ProjectName9"
-    },
-    {
-        "ProjectId": "doxPuVkABw",
-        "ProjectName": "ProjectName10"
-    },
-    {
-        "ProjectId": "DTAFWiRtcK",
-        "ProjectName": "ProjectName11"
-    },
-    {
-        "ProjectId": "dqZwVqaLFB",
-        "ProjectName": "ProjectName12"
-    },
-    {
-        "ProjectId": "YdoAXyaKtU",
-        "ProjectName": "ProjectName13"
-    },
-    {
-        "ProjectId": "wuZbQqbCWU",
-        "ProjectName": "ProjectName14"
-    },
-    {
-        "ProjectId": "fCOuDbTxmy",
-        "ProjectName": "ProjectName15"
-    },
-    {
-        "ProjectId": "lVXuOLYRqd",
-        "ProjectName": "ProjectName16"
-    },
-    {
-        "ProjectId": "elyRKIgNao",
-        "ProjectName": "ProjectName17"
-    },
-    {
-        "ProjectId": "amGtiWbDUX",
-        "ProjectName": "ProjectName18"
-    },
-    {
-        "ProjectId": "fRrRqJXwmu",
-        "ProjectName": "ProjectName19"
-    },
-    {
-        "ProjectId": "lVxnRBVdLA",
-        "ProjectName": "ProjectName20"
-    }
+    { "ProjectId": "vIKGcmrVew", "ProjectName": "ProjectName1" },
+    { "ProjectId": "BkzXgXxpxm", "ProjectName": "ProjectName2" },
+    { "ProjectId": "QURrWgbMrd", "ProjectName": "ProjectName3" },
+    { "ProjectId": "ehObkpkRwc", "ProjectName": "ProjectName4" },
+    { "ProjectId": "TthPZXSeST", "ProjectName": "ProjectName5" },
+    { "ProjectId": "FEuuyFHJLq", "ProjectName": "ProjectName6" },
+    { "ProjectId": "HGxdiEtgpK", "ProjectName": "ProjectName7" },
+    { "ProjectId": "udmCMeevSM", "ProjectName": "ProjectName8" },
+    { "ProjectId": "XqIskXDXZV", "ProjectName": "ProjectName9" },
+    { "ProjectId": "doxPuVkABw", "ProjectName": "ProjectName10" }
 ]
