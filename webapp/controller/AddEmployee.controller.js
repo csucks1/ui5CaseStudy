@@ -4,8 +4,9 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox"
-], (Controller, MessageToast, Filter, FilterOperator, JSONModel, MessageBox) => {
+    "sap/m/MessageBox",
+    "sap/ui/core/routing/History"
+], (Controller, MessageToast, Filter, FilterOperator, JSONModel, MessageBox, History) => {
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.AddEmployee", {
@@ -122,7 +123,7 @@ sap.ui.define([
             })
         },
                 
-        onAddCreate: async function () {
+        onAddCreate: function () {
             var oView = this.getView();
             var firstName = oView.byId("inFirstName").getValue();
             var lastName = oView.byId("inLastName").getValue();
@@ -157,6 +158,19 @@ sap.ui.define([
                 MessageToast.show("Only entries from current project list are valid");
                 return;
             } else {
+                this._fnCreateEmployee(firstName, lastName, oEmployeeIdInput, age, oDatePicker, sValueCL,sValueCP);                            
+            }     
+        },
+
+        _fnCreateEmployee: function(firstName, lastName, oEmployeeIdInput, age, oDatePicker, sValueCL,sValueCP) {
+            // Get the model
+            var oSkillsModel = this.getView().getModel("skillsModel");
+        
+            // Get the data from the model
+            var aSkills = oSkillsModel.getData(); // This returns the entire array []
+        
+            // Check if the array is not null and has items
+            if (aSkills && aSkills.length > 0) {
                 var oData = {
                     FirstName: firstName,
                     LastName: lastName,
@@ -170,17 +184,19 @@ sap.ui.define([
                 var sEntity = "/Employee"
                 // onAddCreate function
                 try {
-                    await this._onCreateQuery(oData, sEntity);
+                    this._onCreateQuery(oData, sEntity);
                     const oRouter = this.getOwnerComponent().getRouter();                     
                     oRouter.navTo("RouteEmployeeList");
 
                 } catch (oError) {
                     console.log(oError);
                     MessageToast.show("Failed to create employee. Please check the console for details.");
-                }                
-            }     
-        },
-
+                } 
+            } else {
+                MessageToast.show("Add Skills first before saving");
+                return;
+            }
+        },        
 
         // open dialog skills
         onAddItem: function (){
@@ -249,7 +265,7 @@ sap.ui.define([
         onDeleteEmployeeSkill: function () {
             var oEmployeeIdInput = this.getView().byId("inEmployeeId").getValue();
             var oTable = this.getView().byId("listEmployee");
-            var aSelectedItems = oTable.getSelectedItems();
+            var aSelectedItems = oTable.getSelectedItems();``
 
             if (aSelectedItems.length === 0) {
                 MessageToast.show("Please select at least one skill to delete.");
@@ -285,7 +301,7 @@ sap.ui.define([
             });
         },
 
-        _performDelete: function (aSelectedItems, oModel, sPath) {
+        _performDelete: function (aSelectedItems, oModel) {
             aSelectedItems.forEach(function(oItem) {
                 const oSkillData = oItem.getBindingContext("skillsModel").getObject();
         
@@ -296,10 +312,13 @@ sap.ui.define([
                     console.error("Could not find key values for a selected skill. Please check property names.", oSkillData);
                     return; 
                 }
-                // const sPath = "/Skill(EmployeeeId='" + sEmployeeId + "', SkillId='" + sSkillId + "')";
-                const sPath = "/Skill(SkillId='" + sSkillId + "')";                
-        
-                // 4. Call the remove function with the constructed path
+
+                let sEntitySetName = "Skill"; 
+                const sPath = oModel.createKey("/" + sEntitySetName, {
+                    EmployeeeId: sEmployeeId, // Key property name must match metadata
+                    SkillId:    sSkillId     // Key property name must match metadata
+                });                         
+               
                 oModel.remove(sPath, {
                     success: function() {
                         MessageToast.show("Skill deleted successfully.");
@@ -311,6 +330,18 @@ sap.ui.define([
                 });
             });
         },
+
+        onCancel: function () {
+            var oHistory = History.getInstance();
+            var sPreviousHash = oHistory.getPreviousHash();
+            var oRouter = this.getOwnerComponent().getRouter();
+
+            if (sPreviousHash !== undefined) {
+                window.history.go(-1);
+            } else {
+                oRouter.navTo("RouteEmployeeList", {}, true);
+            }
+        }        
 
         // ... other functions like onAddCreate, onInputChangeForId etc. ...
     });
