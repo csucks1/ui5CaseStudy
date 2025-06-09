@@ -222,8 +222,12 @@ sap.ui.define([
                     console.error("Could not find key values for a selected skill. Please check property names.", oSkillData);
                     return; 
                 }
-                // const sPath = "/Skill(EmployeeeId='" + sEmployeeId + "', SkillId='" + sSkillId + "')";
-                const sPath = "/Skill(SkillId='" + sSkillId + "')";                
+                
+                let sEntitySetName = "Skill"; 
+                const sPath = oModel.createKey("/" + sEntitySetName, {
+                    EmployeeeId: sEmployeeId, // Key property name must match metadata
+                    SkillId:    sSkillId     // Key property name must match metadata
+                });           
         
                 // 4. Call the remove function with the constructed path
                 oModel.remove(sPath, {

@@ -30,6 +30,7 @@
             <EntityType Name="Skill">
                 <Key>
                     <PropertyRef Name="EmployeeeId" />
+                    <PropertyRef Name="SkillId" />                    
                 </Key>
                 <Property Name="EmployeeeId" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="EmployeeeId"/>
                 <Property Name="SkillId" Type="Edm.String" MaxLength="10" Nullable="true" sap:label="SkillId"/>
