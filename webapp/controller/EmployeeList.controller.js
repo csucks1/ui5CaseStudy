@@ -9,13 +9,13 @@ sap.ui.define([
  
     return Controller.extend("sapips.training.employeeapp.controller.EmployeeList", {
         onInit() {
-            // ADDED: Best practice to get the resource bundle once and store it.
+            // Best practice to get the resource bundle once and store it.
             this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
  
         onUpdateFinished: function (oEvent) {
             var iTotalItems = oEvent.getParameter("total");
-            // CHANGED: Use the stored resource bundle property.
+            // Use the stored resource bundle property.
             var sText = this._oResourceBundle.getText("employeeCountText", [iTotalItems]);
             this.byId("employeeCountText").setText(sText);
         },
@@ -61,13 +61,13 @@ sap.ui.define([
  
             // Requirement (Page 12): Validate that at least 1 row is selected.
             if (aSelectedItems.length === 0) {
-                // CHANGED: Use the i18n key for the warning message.
+                // Use the i18n key for the warning message.
                 MessageBox.warning(this._oResourceBundle.getText("deleteNoSelectionMessage"));
                 return;
             }
  
             // Requirement (Page 12): Show a confirmation message.
-            // CHANGED: Use the i18n keys for both the message text and the dialog title.
+            // Use the i18n keys for both the message text and the dialog title.
             MessageBox.confirm(this._oResourceBundle.getText("deleteConfirmationMessage"), {
                 title: this._oResourceBundle.getText("confirmDeletionTitle"),
                 onClose: (sAction) => {
