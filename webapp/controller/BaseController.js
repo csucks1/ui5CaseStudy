@@ -1,4 +1,3 @@
-// webapp/controller/BaseController.js
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
@@ -7,6 +6,36 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("sapips.training.employeeapp.controller.BaseController", {
+
+        /**
+		 * Convenience method for getting the view model by name.
+		 * @public
+		 * @param {string} [sName] the model name
+		 * @returns {sap.ui.model.Model} the model instance
+		 */
+		getModel(sName) {
+			return this.getView().getModel(sName);
+		},
+
+		/**
+		 * Convenience method for setting the view model.
+		 * @public
+		 * @param {sap.ui.model.Model} oModel the model instance
+		 * @param {string} sName the model name
+		 * @returns {sap.ui.mvc.View} the view instance
+		 */
+		setModel(oModel, sName) {
+			return this.getView().setModel(oModel, sName);
+		},
+
+        /**
+		 * Convenience method for getting the resource bundle.
+		 * @public
+		 * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
+		 */
+        getResourceBundle() {
+			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+		},
 
         /**
          * Generic handler for opening the skill dialog.
@@ -28,7 +57,11 @@ sap.ui.define([
          * Assumes the dialog's ID is "idSkillDialog".
          */
         onCloseDialog: function() {
-            this.getView().byId("idSkillDialog").close();
+            // A null check prevents errors if the dialog is destroyed
+            const oDialog = this.byId("idSkillDialog");
+            if (oDialog) {
+                oDialog.close();
+            }
         },
 
         /**
@@ -129,7 +162,10 @@ sap.ui.define([
             });
 
             oSkillsModel.setData(aSkillsToKeep);
-            MessageToast.show(aSkillsToDelete.length + " skill(s) deleted.");
+
+            // *** LINE CHANGED TO USE I18N ***
+            const sMessage = this.getResourceBundle().getText("skillsDeletedMsg", [aSkillsToDelete.length]);
+            MessageToast.show(sMessage);
         },
 
         /**

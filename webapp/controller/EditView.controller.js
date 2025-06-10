@@ -1,11 +1,11 @@
 sap.ui.define([
-    "./BaseController", // Use the new BaseController
+    "./BaseController",
     "sap/m/MessageToast",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox"
-], (BaseController, MessageToast, Filter, FilterOperator, JSONModel, MessageBox) => { // Update parameters
+], (BaseController, MessageToast, Filter, FilterOperator, JSONModel, MessageBox) => {
     "use strict";
 
     return BaseController.extend("sapips.training.employeeapp.controller.EditView", {
@@ -23,7 +23,7 @@ sap.ui.define([
                 this.getView().bindElement({ path: sPath });
                 this._filterSkills(sEmployeeID);
             } else {
-                MessageToast.show("Employee ID not found for editing.");
+                MessageToast.show(this.getResourceBundle().getText("employeeIdNotFoundForEdit"));
                 this.onCancel();
             }
         },
@@ -35,22 +35,23 @@ sap.ui.define([
         },
 
         onEdit: function() {
-            var oView = this.getView();
-            var firstName = oView.byId("inFirstNameEdit").getValue();
-            var lastName = oView.byId("inLastNameEdit").getValue();
-            var oDatePicker = oView.byId("DP1Edit").getValue();
-            var oEmployeeIdInput = oView.byId("inEmployeeIdEdit").getValue();
-            var age = oView.byId("inAgeEdit").getValue();
-            var alphaRegex = /^[a-zA-Z]+$/;
-            var oComboBoxCL = this.byId("inCareerLevelEdit");
-            var sValueCL = oComboBoxCL.getValue();
-            var sSelectedKeyCL = oComboBoxCL.getSelectedKey();
-            var oComboBoxCP = this.byId("inCurrentProjectEdit");
-            var sValueCP = oComboBoxCP.getValue();
-            var sSelectedKeyCP = oComboBoxCP.getSelectedKey();
+            const oView = this.getView();
+            const oResourceBundle = this.getResourceBundle();
+            const firstName = oView.byId("inFirstNameEdit").getValue();
+            const lastName = oView.byId("inLastNameEdit").getValue();
+            const oDatePicker = oView.byId("DP1Edit").getValue();
+            const oEmployeeIdInput = oView.byId("inEmployeeIdEdit").getValue();
+            const age = oView.byId("inAgeEdit").getValue();
+            const alphaRegex = /^[a-zA-Z]+$/;
+            const oComboBoxCL = this.byId("inCareerLevelEdit");
+            const sValueCL = oComboBoxCL.getValue();
+            const sSelectedKeyCL = oComboBoxCL.getSelectedKey();
+            const oComboBoxCP = this.byId("inCurrentProjectEdit");
+            const sValueCP = oComboBoxCP.getValue();
+            const sSelectedKeyCP = oComboBoxCP.getSelectedKey();
 
             if (!alphaRegex.test(firstName) || !alphaRegex.test(lastName) || age < 0 || age > 90 || (sValueCL !== "" && sSelectedKeyCL === "") || (sValueCP !== "" && sSelectedKeyCP === "")) {
-                MessageToast.show("Please correct the invalid fields.");
+                MessageToast.show(oResourceBundle.getText("invalidFields"));
                 return;
             }
 
@@ -58,12 +59,13 @@ sap.ui.define([
         },
 
         _fnEditEmployee: async function(firstName, lastName, oEmployeeIdInput, age, oDatePicker, sValueCL, sValueCP) {
+            const oResourceBundle = this.getResourceBundle();
             if (this.getView().getModel("skillsModel").getData().length === 0) {
-                MessageToast.show("Employee must have at least one skill.");
+                MessageToast.show(oResourceBundle.getText("employeeMustHaveSkill"));
                 return;
             }
 
-            var oData = {
+            const oData = {
                 FirstName: firstName,
                 LastName: lastName,
                 Age: age,
@@ -82,26 +84,27 @@ sap.ui.define([
                     EmployeeID: oEmployeeIdInput
                 });
             } catch (oError) {
-                MessageToast.show("Failed to update employee. Please check the console for details.");
+                MessageToast.show(oResourceBundle.getText("employeeUpdateError"));
             }
         },
 
         onAddSkillsCreate: async function() {
             const oView = this.getView();
+            const oResourceBundle = this.getResourceBundle();
             const oEmployeeIdInput = oView.byId("inEmployeeIdEdit").getValue();
-            var oSkill = this.byId("inSkillList");
-            var sValueSkill = oSkill.getValue();
-            var sSelectedKeySkill = oSkill.getSelectedKey();
-            var oProficient = this.byId("inSProficient");
-            var sValueProficient = oProficient.getValue();
-            var sSelectedKeyProficient = oProficient.getSelectedKey();
+            const oSkill = this.byId("inSkillList");
+            const sValueSkill = oSkill.getValue();
+            const sSelectedKeySkill = oSkill.getSelectedKey();
+            const oProficient = this.byId("inSProficient");
+            const sValueProficient = oProficient.getValue();
+            const sSelectedKeyProficient = oProficient.getSelectedKey();
 
             if ((sValueSkill !== "" && sSelectedKeySkill === "") || (sValueProficient !== "" && sSelectedKeyProficient === "")) {
-                MessageToast.show("Only entries from the lists are valid.");
+                MessageToast.show(oResourceBundle.getText("invalidListEntry"));
                 return;
             }
 
-            var oData = {
+            const oData = {
                 EmployeeeId: oEmployeeIdInput,
                 SkillId: sSelectedKeySkill,
                 ProficiencyID: sSelectedKeyProficient,
@@ -114,23 +117,24 @@ sap.ui.define([
                 const oSkillsModel = oView.getModel("skillsModel");
                 const aFilter = [new Filter("EmployeeeId", FilterOperator.EQ, oEmployeeIdInput)];
                 await this._onReadQuery(oSkillsModel, aFilter, "/Skill");
-                this.onCloseDialog(); // Use inherited method
-                MessageToast.show("Skill created successfully!");
+                this.onCloseDialog();
+                MessageToast.show(oResourceBundle.getText("skillCreateSuccess"));
             } catch (oError) {
-                MessageBox.error("Failed to create skill. Please check the console for details.");
+                MessageBox.error(oResourceBundle.getText("skillCreateError"));
             }
         },
 
         onDeleteEmployeeSkill: function() {
-            var oTable = this.getView().byId("listEmployeeEdit");
-            var aSelectedItems = oTable.getSelectedItems();
+            const oResourceBundle = this.getResourceBundle();
+            const oTable = this.getView().byId("listEmployeeEdit");
+            const aSelectedItems = oTable.getSelectedItems();
             if (aSelectedItems.length === 0) {
-                MessageToast.show("Please select at least one skill to delete.");
+                MessageToast.show(oResourceBundle.getText("selectSkillToDelete"));
                 return;
             }
 
-            MessageBox.confirm("Are you sure you want to delete the selected skill(s)?", {
-                title: "Confirm Deletion",
+            MessageBox.confirm(oResourceBundle.getText("confirmSkillDeletionMsg"), {
+                title: oResourceBundle.getText("confirmDeletionTitle"),
                 onClose: (sAction) => {
                     if (sAction === MessageBox.Action.OK) {
                         this._performDelete(aSelectedItems, this.getOwnerComponent().getModel());
