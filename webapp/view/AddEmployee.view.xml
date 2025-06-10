@@ -96,7 +96,7 @@
                         <ColumnListItem id="_IDGenColumnListItem">
                             <cells>
                                 <Text id="_IDGenText3" text="{skillsModel>SkillName}" />
-                                <Text id="_IDGenText4" text="{skillsModel>SkillId}" />
+                                <Text id="_IDGenText4" text="{skillsModel>ProficiencyLevel}" />
                             </cells>
                         </ColumnListItem>
                     </items>
