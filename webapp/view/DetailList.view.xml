@@ -3,7 +3,11 @@
     xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"      
     xmlns="sap.m">
-    <Page id="DetailList" title="{i18n>employeeDetails}">
+    <Page   id="DetailList" 
+            title="{i18n>employeeDetails}"  
+            showNavButton="true"
+            navButtonPress="onNavBack" >
+        
         <content>
             <ObjectHeader
                 id="objectHeader"
@@ -19,47 +23,47 @@
 
                     <!-- Tab: Employee Info -->
                     <IconTabFilter text="{i18n>employeeInfo}" key="Info" id="idTabInfo">
-                        <form:SimpleForm id="idSimpleFormInfo" editable="false" layout="ResponsiveGridLayout">
-                            <Label id="lblEmployeeID" text="{i18n>employeeId}" />
-                            <Text id="txtEmployeeID" text="{EmployeeID}" />
+                        <form:SimpleForm    id="idSimpleFormInfo" editable="false" layout="ResponsiveGridLayout">
+                            <Label          id="lblEmployeeID" text="{i18n>employeeId}" />
+                            <Text           id="txtEmployeeID" text="{EmployeeID}" />
 
-                            <Label id="lb2FirstName" text="{i18n>firstName}" />
-                            <Text id="txtFirstName" text="{FirstName}" />
+                            <Label  id="lb2FirstName" text="{i18n>firstName}" />
+                            <Text   id="txtFirstName" text="{FirstName}" />
 
-                            <Label id="lb2LastName" text="{i18n>lastName}" />
-                            <Text id="txtLastName" text="{LastName}" />
+                            <Label  id="lb2LastName" text="{i18n>lastName}" />
+                            <Text   id="txtLastName" text="{LastName}" />
 
-                            <Label id="lb2Age" text="{i18n>age}" />
-                            <Text id="txtAge" text="{Age}" />
+                            <Label  id="lb2Age" text="{i18n>age}" />
+                            <Text   id="txtAge" text="{Age}" />
 
-                            <Label id="lb2DateHire" text="{i18n>dateOfHire}" />
-                            <Text id="txtDateHire" text="{DateHire}" />
+                            <Label  id="lb2DateHire" text="{i18n>dateOfHire}" />
+                            <Text   id="txtDateHire" text="{DateHire}" />
 
-                            <Label id="lb2CareerLevel" text="{i18n>careerLevel}" />
-                            <Text id="txtCareerLevel" text="{CareerLevel}" />
+                            <Label  id="lb2CareerLevel" text="{i18n>careerLevel}" />
+                            <Text   id="txtCareerLevel" text="{CareerLevel}" />
 
-                            <Label id="lb2CurrentProject" text="{i18n>currentProject}" />
-                            <Text id="txtCurrentProject" text="{CurrentProject}" />
+                            <Label  id="lb2CurrentProject" text="{i18n>currentProject}" />
+                            <Text   id="txtCurrentProject" text="{CurrentProject}" />
                         </form:SimpleForm>
                     </IconTabFilter>
 
                     <!-- Tab: Skills -->
-                    <IconTabFilter text="{i18n>skills}" key="Skills" id="idTabSkills">
+                    <IconTabFilter text="{i18n>skills}" key="Skills" id="idTabSkills"  >
                         <VBox id="idVBoxSkills">
                             <!-- <Text id="idSkillsTitle" text="{= ${Skills}.length ? ${Skills}.length + ' ' + ${i18n>skills} : '0 ' + ${i18n>skills}}" /> -->
                             <!-- <Table id="idSkillsTable" items="{Skills}"> -->
                             <Table id="idSkillsTable" items="{skillsModel>/}">                            
                                 <columns>
-                                    <Column id="idColSkill"><Text id="idSkillHeader" text="{i18n>skill}" /></Column>
-                                    <Column id="idColProficiency"><Text id="idProficiencyHeader" text="{i18n>proficiency}" /></Column>
+                                    <Column id="idColSkill"><Text       id="idSkillHeader"          text="{i18n>skills}" /></Column>
+                                    <Column id="idColProficiency"><Text id="idProficiencyHeader"    text="{i18n>proficiency}" /></Column>
                                 </columns>
                                 <items>
                                     <ColumnListItem id="idSkillListItem">
                                         <cells>
                                             <!-- <Text id="idSkillsTable-skillText" text="{SkilSkillName}" />
                                             <Text id="idSkillsTable-profText" text="{ProficiencyLevel}" /> -->
-                                            <Text id="idSkillsTable-skillText" text="{skillsModel>SkillName}" />
-                                            <Text id="idSkillsTable-profText" text="{skillsModel>ProficiencyLevel}" />                                            
+                                            <Text id="idSkillsTable-skillText"  text="{skillsModel>SkillName}" />
+                                            <Text id="idSkillsTable-profText"   text="{skillsModel>ProficiencyLevel}" />                                            
                                         </cells>
                                     </ColumnListItem>
                                 </items>

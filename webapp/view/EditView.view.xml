@@ -3,7 +3,7 @@
     xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
-    <Page id="EditView" title="{i18n>editEmployeePageTitle}">
+    <Page id="EditView" title="{i18n>editEmployeePageTitle}" showNavButton="true" navButtonPress="onCancel">
 
         <!-- This Panel contains the main form for editing employee details. -->
         <Panel id="panelEmployeeDetailsEdit" headerText="{i18n>editEmployeeDetailsPanelHeader}">
@@ -16,7 +16,7 @@
                     <!-- <Input id="inFirstNameEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/> -->
                     <Input id="inFirstNameEdit" value="{FirstName}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>
 
-
+ 
                     <Label id="lblLastNameEdit" text="{i18n>lastNameLabel}" />
                     <!-- <Input id="inLastNameEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/> -->
                     <Input id="inLastNameEdit" value="{LastName}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>                    
