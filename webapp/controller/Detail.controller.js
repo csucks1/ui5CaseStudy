@@ -52,7 +52,7 @@ sap.ui.define([
                         const iSkillCount = aData.length;
 
                         // Access the tab and update its text
-                        const oSkillsTab = oView.byId("idTabSkills");
+                        const oSkillsTab = oView.byId("idSkillHeader");
 
                         // Get the i18n text for "skills"
                         const oResourceBundle = oView.getModel("i18n").getResourceBundle();
