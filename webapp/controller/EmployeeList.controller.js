@@ -16,7 +16,7 @@ sap.ui.define([
             var sText = oResourceBundle.getText("employeeCountText", [iTotalItems]);
             this.byId("employeeCountText").setText(sText);
         },
-       
+       // magatmb Start
         onSearch: function (oEvent) {
             // 1. Get the search query from the event parameter.
             const sQuery = oEvent.getParameter("query");
