@@ -8,12 +8,15 @@ sap.ui.define([
     "use strict";
  
     return Controller.extend("sapips.training.employeeapp.controller.EmployeeList", {
-        onInit() {},
+        onInit() {
+            // Best practice to get the resource bundle once and store it.
+            this._oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+        },
  
         onUpdateFinished: function (oEvent) {
             var iTotalItems = oEvent.getParameter("total");
-            var oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            var sText = oResourceBundle.getText("employeeCountText", [iTotalItems]);
+            // Use the stored resource bundle property.
+            var sText = this._oResourceBundle.getText("employeeCountText", [iTotalItems]);
             this.byId("employeeCountText").setText(sText);
         },
        
@@ -44,7 +47,7 @@ sap.ui.define([
               // 4. If the search query is empty, remove all filters by passing an empty array.
               oBinding.filter([]);
             }
-          },
+        },
  
         onAddEmployee: function () {
             var oRouter = this.getOwnerComponent().getRouter();
@@ -54,17 +57,19 @@ sap.ui.define([
         onDeleteEmployee: function () {
             var oTable = this.byId("employeeTable");
             var aSelectedItems = oTable.getSelectedItems();
-            var oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             var oModel = this.getOwnerComponent().getModel();
  
             // Requirement (Page 12): Validate that at least 1 row is selected.
             if (aSelectedItems.length === 0) {
-                MessageBox.warning(oResourceBundle.getText("deleteNoSelectionMessage"));
+                // Use the i18n key for the warning message.
+                MessageBox.warning(this._oResourceBundle.getText("deleteNoSelectionMessage"));
                 return;
             }
  
             // Requirement (Page 12): Show a confirmation message.
-            MessageBox.confirm(oResourceBundle.getText("deleteConfirmationMessage"), {
+            // Use the i18n keys for both the message text and the dialog title.
+            MessageBox.confirm(this._oResourceBundle.getText("deleteConfirmationMessage"), {
+                title: this._oResourceBundle.getText("confirmDeletionTitle"),
                 onClose: (sAction) => {
                     if (sAction === MessageBox.Action.OK) {
                         this._fnPerformDelete(aSelectedItems, oModel);
@@ -74,6 +79,9 @@ sap.ui.define([
         },
 
         _fnPerformDelete: function (aSelectedItems, oModel) {
+            // ADDED: Create a local reference to the resource bundle for use inside forEach.
+            const oResourceBundle = this._oResourceBundle;
+
             aSelectedItems.forEach(function(oItem) {
                 const oSkillData = oItem.getBindingContext().getObject();
 
@@ -91,10 +99,12 @@ sap.ui.define([
                
                 oModel.remove(sPath, {
                     success: function() {
-                        MessageToast.show("Employee deleted successfully.");
+                        // CHANGED: Replaced hardcoded string with i18n key.
+                        MessageToast.show(oResourceBundle.getText("employeeDeleteSuccessMsg"));
                     },
                     error: function(oError) {
-                        MessageBox.error("Failed to delete Employee. The server responded with an error.");
+                        // CHANGED: Replaced hardcoded string with i18n key.
+                        MessageBox.error(oResourceBundle.getText("employeeDeleteErrorMsg"));
                         console.error("Error deleting item at path: " + sPath, oError);
                     }
                 });
