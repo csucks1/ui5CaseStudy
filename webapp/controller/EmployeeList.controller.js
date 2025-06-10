@@ -84,7 +84,7 @@ sap.ui.define([
 
             aSelectedItems.forEach(function(oItem) {
                 const oSkillData = oItem.getBindingContext().getObject();
-                console.log(oSkillData);
+
                 const sEmployeeId = oSkillData.EmployeeID;    
         
                 if (!sEmployeeId) {
