@@ -12,8 +12,7 @@ sap.ui.define([
     return Controller.extend("sapips.training.employeeapp.controller.AddEmployee", {
         onInit() {
             const oView = this.getView();
-            const oEmployeeIdInput = oView.byId("inEmployeeId");
-            this.getView().setModel(new JSONModel({}), "employeeModel"); 
+            const oEmployeeIdInput = oView.byId("inEmployeeId"); 
             this.getView().setModel(new JSONModel([]), "skillsModel");   
 
             if (oEmployeeIdInput) {
@@ -158,7 +157,12 @@ sap.ui.define([
                 MessageToast.show("Only entries from current project list are valid");
                 return;
             } else {
-                this._fnCreateEmployee(firstName, lastName, oEmployeeIdInput, age, oDatePicker, sValueCL,sValueCP);                            
+                try{
+                    this._fnCreateEmployee(firstName, lastName, oEmployeeIdInput, age, oDatePicker, sValueCL,sValueCP);    
+                } catch (oError) {
+                    console.log(oError);
+                    MessageToast.show("Failed to create employee. Please check the console for details.");                   
+                }                        
             }     
         },
 
@@ -263,9 +267,8 @@ sap.ui.define([
         },
 
         onDeleteEmployeeSkill: function () {
-            var oEmployeeIdInput = this.getView().byId("inEmployeeId").getValue();
             var oTable = this.getView().byId("listEmployee");
-            var aSelectedItems = oTable.getSelectedItems();``
+            var aSelectedItems = oTable.getSelectedItems();
 
             if (aSelectedItems.length === 0) {
                 MessageToast.show("Please select at least one skill to delete.");
@@ -279,20 +282,9 @@ sap.ui.define([
             MessageBox.confirm("Are you sure you want to delete the selected skill(s)?", {
                 title: "Confirm Deletion",
                 onClose: function (sAction) {
-                    if (sAction === MessageBox.Action.OK) {
-                        // User confirmed, proceed with deletion
-                        var sEntity = "/Skill"    
-                        const oView = this.getView();
-                        const oSkillsModel = oView.getModel("skillsModel"); 
-                        var aFilter = [];
-                        aFilter.push(new Filter({
-                            path: "EmployeeeId",
-                            operator: FilterOperator.EQ,
-                            value1: oEmployeeIdInput
-                        }));                        
+                    if (sAction === MessageBox.Action.OK) {                      
                         try{
                             this._performDelete(aSelectedItems, oModel);
-                            this._onReadQuery(oSkillsModel, aFilter, sEntity);
                         } catch (oError) {
 
                         }
@@ -302,33 +294,44 @@ sap.ui.define([
         },
 
         _performDelete: function (aSelectedItems, oModel) {
-            aSelectedItems.forEach(function(oItem) {
-                const oSkillData = oItem.getBindingContext("skillsModel").getObject();
-        
-                const sEmployeeId = oSkillData.EmployeeeId;
-                const sSkillId = oSkillData.SkillId;       
-        
-                if (!sEmployeeId || !sSkillId) {
-                    console.error("Could not find key values for a selected skill. Please check property names.", oSkillData);
-                    return; 
-                }
+            const oSkillsModel = this.getView().getModel("skillsModel");
+            let aCurrentSkills = oSkillsModel.getData();
 
-                let sEntitySetName = "Skill"; 
-                const sPath = oModel.createKey("/" + sEntitySetName, {
-                    EmployeeeId: sEmployeeId, // Key property name must match metadata
-                    SkillId:    sSkillId     // Key property name must match metadata
-                });                         
-               
-                oModel.remove(sPath, {
-                    success: function() {
-                        MessageToast.show("Skill deleted successfully.");
-                    },
-                    error: function(oError) {
-                        MessageBox.error("Failed to delete skill. The server responded with an error.");
-                        console.error("Error deleting item at path: " + sPath, oError);
-                    }
-                });
+            // Step 1: Collect the keys of all items to be deleted.
+            // Don't modify anything yet!
+            const aSkillsToDelete = aSelectedItems.map(oItem => {
+                return oItem.getBindingContext("skillsModel").getObject();
             });
+
+            // Step 2 & 3: Process backend deletions and prepare frontend update
+            aSkillsToDelete.forEach(oSkillData => {
+                const sEmployeeId = oSkillData.EmployeeeId;
+                const sSkillId = oSkillData.SkillId;
+
+                // Backend Deletion
+                const sPath = oModel.createKey("/Skill", {
+                    EmployeeeId: sEmployeeId,
+                    SkillId: sSkillId
+                });
+                oModel.remove(sPath, { /* success/error handlers are optional here */ });
+            });
+
+            // Step 4: Update the client-side JSONModel efficiently.
+            // We create a new array containing only the skills that were NOT marked for deletion.
+            const aSkillsToKeep = aCurrentSkills.filter(oExistingSkill => {
+                // Return true to keep the item, false to remove it.
+                // The 'find' will return an object (truthy) if the skill is in the deletion list.
+                return !aSkillsToDelete.find(oSkillToDelete => 
+                    oSkillToDelete.EmployeeeId === oExistingSkill.EmployeeeId && 
+                    oSkillToDelete.SkillId === oExistingSkill.SkillId
+                );
+            });
+
+            // Set the new, filtered data on the model
+            oSkillsModel.setData(aSkillsToKeep);
+            // oSkillsModel.refresh() is also an option after setting data.
+
+            MessageToast.show(aSkillsToDelete.length + " skill(s) deleted.");
         },
 
         onCancel: function () {

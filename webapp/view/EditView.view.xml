@@ -119,7 +119,7 @@
             <OverflowToolbar id="idOFTFooterEdit">
                 <ToolbarSpacer id="idTSpacerFooterEdit" />
                 <Button id="idBtnUpdate" text="{i18n>updateButtonText}" press=".onEdit"/>
-                <Button id="idBtnCancelEdit" text="{i18n>cancelButtonText}"/>
+                <Button id="idBtnCancelEdit" text="{i18n>cancelButtonText}" press=".onCancel"/>
             </OverflowToolbar>
         </footer>
     </Page>
