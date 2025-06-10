@@ -9,7 +9,7 @@ sap.ui.define([
 ], (Controller, MessageToast, Filter, FilterOperator, JSONModel, MessageBox, History) => {
     "use strict";
 
-    return Controller.extend("sapips.training.employeeapp.controller.AddEmployee", {
+    return Controller.extend("sapips.training.employeeapp.controller.EditView", {
         onInit() {            
             // It's better for an Edit view to listen to its own route
             const oRouter = this.getOwnerComponent().getRouter();
