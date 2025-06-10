@@ -4,8 +4,9 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox"
-], (BaseController, MessageToast, Filter, FilterOperator, JSONModel, MessageBox) => {
+    "sap/m/MessageBox",
+    "sap/ui/core/library"
+], (BaseController, MessageToast, Filter, FilterOperator, JSONModel, MessageBox, library) => {
     "use strict";
 
     return BaseController.extend("sapips.training.employeeapp.controller.EditView", {
@@ -88,64 +89,51 @@ sap.ui.define([
             }
         },
 
+        
+
+        // skills
         onAddSkillsCreate: async function() {
-            const oView = this.getView();
-            const oResourceBundle = this.getResourceBundle();
-            const oEmployeeIdInput = oView.byId("inEmployeeIdEdit").getValue();
-            const oSkill = this.byId("inSkillList");
-            const sValueSkill = oSkill.getValue();
-            const sSelectedKeySkill = oSkill.getSelectedKey();
-            const oProficient = this.byId("inSProficient");
-            const sValueProficient = oProficient.getValue();
-            const sSelectedKeyProficient = oProficient.getSelectedKey();
-
-            if ((sValueSkill !== "" && sSelectedKeySkill === "") || (sValueProficient !== "" && sSelectedKeyProficient === "")) {
-                MessageToast.show(oResourceBundle.getText("invalidListEntry"));
-                return;
-            }
-
-            const oData = {
-                EmployeeeId: oEmployeeIdInput,
-                SkillId: sSelectedKeySkill,
-                ProficiencyID: sSelectedKeyProficient,
-                SkillName: sValueSkill,
-                ProficiencyLevel: sValueProficient
-            };
-
-            try {
-                await this._onCreateQuery(oData, "/Skill");
-                const oSkillsModel = oView.getModel("skillsModel");
-                const aFilter = [new Filter("EmployeeeId", FilterOperator.EQ, oEmployeeIdInput)];
-                await this._onReadQuery(oSkillsModel, aFilter, "/Skill");
-                this.onCloseDialog();
-                MessageToast.show(oResourceBundle.getText("skillCreateSuccess"));
-            } catch (oError) {
-                MessageBox.error(oResourceBundle.getText("skillCreateError"));
-            }
-        },
+            this.onAddSkills("inEmployeeIdEdit");
+        },         
 
         onDeleteEmployeeSkill: function() {
-            const oResourceBundle = this.getResourceBundle();
-            const oTable = this.getView().byId("listEmployeeEdit");
-            const aSelectedItems = oTable.getSelectedItems();
-            if (aSelectedItems.length === 0) {
-                MessageToast.show(oResourceBundle.getText("selectSkillToDelete"));
-                return;
-            }
-
-            MessageBox.confirm(oResourceBundle.getText("confirmSkillDeletionMsg"), {
-                title: oResourceBundle.getText("confirmDeletionTitle"),
-                onClose: (sAction) => {
-                    if (sAction === MessageBox.Action.OK) {
-                        this._performDelete(aSelectedItems, this.getOwnerComponent().getModel());
-                    }
-                }
-            });
+            this.onDeleteSkill("listEmployeeEdit");
         },
 
         onCancel: function() {
             const sEmployeeID = this.getView().byId("inEmployeeIdEdit").getValue();
             this._navigateBack("RouteDetailList", { EmployeeID: sEmployeeID });
-        }
+        },
+
+
+        // validations
+        _validateFirstNameInput: function() {
+            this._validateAlpha("inFirstNameEdit", "invalidFieldName");
+        },        
+
+        _validateLastNameInput: function () {
+            this._validateAlpha("inLastNameEdit", "invalidFieldName");
+        },
+        
+        _validateAgeInput: function () {
+            this._validateNumeric("inAgeEdit", "invalidAge", 0, 90);
+        },
+
+        validateCLInput: function () {
+            this._validateComboBox("inCareerLevelEdit", "invalidListEntry");
+        },
+
+        validateProjectInput: function () {
+            this._validateComboBox("inCurrentProjectEdit", "invalidListEntry");
+        },
+
+        onInputChangeForId: function() {
+            // this code runs validation on the first name
+            this._validateFirstNameInput();
+            // this code runs validation on the last name
+            this._validateLastNameInput();
+            // this code runs validation on the age
+            this._validateAgeInput();
+        },        
     });
 });
