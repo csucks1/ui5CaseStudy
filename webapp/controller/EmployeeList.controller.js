@@ -19,7 +19,8 @@ sap.ui.define([
             var sText = this._oResourceBundle.getText("employeeCountText", [iTotalItems]);
             this.byId("employeeCountText").setText(sText);
         },
-       
+       // Search function: initially, we used livechange, but, in the end, we decided to use search so that the user can see the 
+       // results query after hitting enter.
         onSearch: function (oEvent) {
             // 1. Get the search query from the event parameter.
             const sQuery = oEvent.getParameter("query");
@@ -37,6 +38,8 @@ sap.ui.define([
                   new Filter("FirstName", FilterOperator.Contains, sQuery),
                   // Filter for the LastName property
                   new Filter("LastName", FilterOperator.Contains, sQuery)
+                  // similarly, we can put the diff filter keys by adding 
+                  //new Filter("<fieldName>", FilterOperator.Contains, sQuery)
                 ],
                 and: false // Use 'false' for an OR condition between the filters
               });
@@ -54,9 +57,21 @@ sap.ui.define([
             oRouter.navTo("RouteAddEmployee");
         },
        
+        /**
+         * Handles the deletion of selected employee from the table
+         * Implements requirements from Page 12 of specifications:
+         * - Must have at least one row selected
+         * - Must show confirmation dialog before deletion ***
+         * - Must perform actual deletion after confirmation 
+         */        
         onDeleteEmployee: function () {
+            //get the reference to the employee table
             var oTable = this.byId("employeeTable");
+            //get the selected item: 
             var aSelectedItems = oTable.getSelectedItems();
+            //get i18n resource bundle: 
+            var oResourceBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            //get the data model instance: 
             var oModel = this.getOwnerComponent().getModel();
  
             // Requirement (Page 12): Validate that at least 1 row is selected.
@@ -72,36 +87,45 @@ sap.ui.define([
                 title: this._oResourceBundle.getText("confirmDeletionTitle"),
                 onClose: (sAction) => {
                     if (sAction === MessageBox.Action.OK) {
+                        //if the user clicked on Yes, the function _fnPerformDelete will be called passing the selected item its corresponding data model.
                         this._fnPerformDelete(aSelectedItems, oModel);
                     }
                 }
             });
         },
 
+        // the actual deletion is inside this function: 
         _fnPerformDelete: function (aSelectedItems, oModel) {
+            // loops trhough each selected item in the table
             // ADDED: Create a local reference to the resource bundle for use inside forEach.
             const oResourceBundle = this._oResourceBundle;
-
             aSelectedItems.forEach(function(oItem) {
+                // gets the employee data object 
                 const oSkillData = oItem.getBindingContext().getObject();
-
+                // debugging purposes only. can be removed if needed.
+                console.log(oSkillData);
+                // extracts the EmployeeID -which is a primary key, from the data.
                 const sEmployeeId = oSkillData.EmployeeID;    
-        
+                // validation: 
                 if (!sEmployeeId) {
-                    console.error("Could not find key values for a selected skill. Please check property names.", oSkillData);
+                    // for debugging purposes only. can be deleted. 
+                    // console.error("Could not find key values for a selected employee.", oSkillData);
                     return; 
                 }
 
+                //else, prepare the odata for deletion parameters
                 let sEntitySetName = "Employee"; 
+                // create the odata path with key parameters
                 const sPath = oModel.createKey("/" + sEntitySetName, {
                     EmployeeID: sEmployeeId, // Key property name must match metadata
                 });                         
-               
+               // deletion execution: passing the sPath to execute the odata DELETE request.
                 oModel.remove(sPath, {
                     success: function() {
                         // CHANGED: Replaced hardcoded string with i18n key.
                         MessageToast.show(oResourceBundle.getText("employeeDeleteSuccessMsg"));
                     },
+                    // error handling 
                     error: function(oError) {
                         // CHANGED: Replaced hardcoded string with i18n key.
                         MessageBox.error(oResourceBundle.getText("employeeDeleteErrorMsg"));
@@ -110,7 +134,7 @@ sap.ui.define([
                 });
             });
         },        
- 
+        //MRM end
         onEmployeePress: function (oEvent) {
             var oSelectedItem = oEvent.getSource();
             var oContext = oSelectedItem.getBindingContext();
