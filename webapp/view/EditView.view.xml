@@ -14,15 +14,15 @@
 
                     <Label id="lblFirstNameEdit" text="{i18n>firstNameLabel}"/>
                     <!-- <Input id="inFirstNameEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/> -->
-                    <Input id="inFirstNameEdit" value="{FirstName}" required="true" placeholder="{i18n>commonPlaceholder}" />
+                    <Input id="inFirstNameEdit" value="{FirstName}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>
 
 
                     <Label id="lblLastNameEdit" text="{i18n>lastNameLabel}" />
                     <!-- <Input id="inLastNameEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/> -->
-                    <Input id="inLastNameEdit" value="{LastName}" required="true" placeholder="{i18n>commonPlaceholder}" />                    
+                    <Input id="inLastNameEdit" value="{LastName}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>                    
 
                     <Label id="lblAgeEdit" text="{i18n>ageLabel}" />
-                    <Input id="inAgeEdit" value="{Age}" required="true" placeholder="{i18n>commonPlaceholder}"/>
+                    <Input id="inAgeEdit" value="{Age}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>
 
                     <Label id="lblDateEdit" text="{i18n>dateOfHireLabel}" />
                     <DatePicker
@@ -41,6 +41,7 @@
                         width="100%"
                         required="true"
                         placeholder="{i18n>commonPlaceholder}"
+                        change="validateCLInput"
                         value="{CareerLevel}"  
                         selectedKey="{CareerLevel}"                                            
                         items="{/CareerList}">
@@ -55,7 +56,7 @@
                         width="100%"
                         required="true"
                         placeholder="{i18n>commonPlaceholder}"
-                        change="onCurrentProjectChange"
+                        change="validateProjectInput"
                         value="{CurrentProject}"
                         selectedKey="{CurrentProject}"
                         items="{/ProjectList}">

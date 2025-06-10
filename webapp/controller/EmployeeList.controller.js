@@ -76,7 +76,7 @@ sap.ui.define([
         _fnPerformDelete: function (aSelectedItems, oModel) {
             aSelectedItems.forEach(function(oItem) {
                 const oSkillData = oItem.getBindingContext().getObject();
-                console.log(oSkillData);
+
                 const sEmployeeId = oSkillData.EmployeeID;    
         
                 if (!sEmployeeId) {
