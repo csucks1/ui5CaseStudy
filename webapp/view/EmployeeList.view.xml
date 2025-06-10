@@ -29,7 +29,7 @@
              <SearchField
               id="employeeSearchField"
               placeholder="{i18n>searchPlaceholder}"
-              liveChange=".onSearch"
+              search=".onSearch"
               width="20%"
             />
 

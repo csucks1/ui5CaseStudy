@@ -41,7 +41,8 @@
                         width="100%"
                         required="true"
                         placeholder="{i18n>commonPlaceholder}"
-                        value="{CareerLevel}"
+                        value="{CareerLevel}"  
+                        selectedKey="{CareerLevel}"                                            
                         items="{/CareerList}">
                         <items>
                             <core:Item id="_IDCLItemEdit" key="{CareerId}" text="{CareerLevel}" />
@@ -56,6 +57,7 @@
                         placeholder="{i18n>commonPlaceholder}"
                         change="onCurrentProjectChange"
                         value="{CurrentProject}"
+                        selectedKey="{CurrentProject}"
                         items="{/ProjectList}">
                         <items>
                             <core:Item id="_IDCPItemEdit" key="{ProjectId}" text="{ProjectName}" />
@@ -106,7 +108,7 @@
                         <ColumnListItem id="_IDGenColumnListItemEdit">
                             <cells>
                                 <Text id="_IDGenText3Edit" text="{skillsModel>SkillName}" />
-                                <Text id="_IDGenText4Edit" text="{skillsModel>SkillId}" />
+                                <Text id="_IDGenText4Edit" text="{skillsModel>ProficiencyLevel}" />
                             </cells>
                         </ColumnListItem>
                     </items>
@@ -119,7 +121,7 @@
             <OverflowToolbar id="idOFTFooterEdit">
                 <ToolbarSpacer id="idTSpacerFooterEdit" />
                 <Button id="idBtnUpdate" text="{i18n>updateButtonText}" press=".onEdit"/>
-                <Button id="idBtnCancelEdit" text="{i18n>cancelButtonText}"/>
+                <Button id="idBtnCancelEdit" text="{i18n>cancelButtonText}" press=".onCancel"/>
             </OverflowToolbar>
         </footer>
     </Page>
