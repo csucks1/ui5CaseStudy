@@ -31,7 +31,7 @@
               placeholder="{i18n>searchPlaceholder}"
               search=".onSearch"
               width="20%"
-            />
+            /> 
 
             <!-- This Button navigates to the page for adding a new employee. -->
             <Button id="addButton" text="{i18n>addButtonText}" icon="sap-icon://add" press=".onAddEmployee" />
@@ -43,14 +43,14 @@
  
         <!-- The columns aggregation defines the headers for the table. -->
         <columns>
-          <Column id="colID"><Text id="colIDText" text="{i18n>idColumnHeader}" /></Column>
+          <Column id="colID"><Text        id="colIDText"        text="{i18n>idColumnHeader}" /></Column>
           <Column id="colFirstName"><Text id="colFirstNameText" text="{i18n>firstNameColumnHeader}" /></Column>
-          <Column id="colLastName"><Text id="colLastNameText" text="{i18n>lastNameColumnHeader}" /></Column>
-          <Column id="colAge"><Text id="colAgeText" text="{i18n>ageColumnHeader}" /></Column>
-          <Column id="colHireDate"><Text id="colHireDateText" text="{i18n>dateOfHireColumnHeader}" /></Column>
+          <Column id="colLastName"><Text  id="colLastNameText"  text="{i18n>lastNameColumnHeader}" /></Column>
+          <Column id="colAge"><Text       id="colAgeText"       text="{i18n>ageColumnHeader}" /></Column>
+          <Column id="colHireDate"><Text  id="colHireDateText"  text="{i18n>dateOfHireColumnHeader}" /></Column>
           <!-- CHANGED: Corrected typo from i1e8n to i18n -->
-          <Column id="colCareer"><Text id="colCareerText" text="{i18n>careerLevelColumnHeader}" /></Column>
-          <Column id="colProject"><Text id="colProjectText" text="{i18n>currentProjectColumnHeader}" /></Column>
+          <Column id="colCareer"><Text    id="colCareerText"    text="{i18n>careerLevelColumnHeader}" /></Column>
+          <Column id="colProject"><Text   id="colProjectText"   text="{i18n>currentProjectColumnHeader}" /></Column>
         </columns>
  
         <!-- The items aggregation defines the template for each row in the table. -->

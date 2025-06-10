@@ -56,7 +56,7 @@ sap.ui.define([
 
                         // Get the i18n text for "skills"
                         const oResourceBundle = oView.getModel("i18n").getResourceBundle();
-                        const sSkillsText = oResourceBundle.getText("skills"); // e.g., "Skills"
+                        const sSkillsText = oResourceBundle.getText("skills"); // e.g., "Skills" 
 
                         // Update tab text to "Skills (X)"
                         if (oSkillsTab) {
