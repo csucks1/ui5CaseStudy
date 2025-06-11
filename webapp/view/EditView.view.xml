@@ -6,23 +6,21 @@
     <Page id="EditView" title="{i18n>editEmployeePageTitle}" showNavButton="true" navButtonPress="onCancel">
 
         <!-- This Panel contains the main form for editing employee details. -->
-        <Panel id="panelEmployeeDetailsEdit" headerText="{i18n>editEmployeeDetailsPanelHeader}">
+        <Panel id="panelEmployeeDetailsEdit" headerText="{i18n>editEmployeeDetailsPanelHeader}">            
             <form:SimpleForm id="formEmployeeEdit" editable="true">
                 <form:content>
-                    <Label id="lblEmployeeIdEdit" text="{i18n>employeeIdLabel}" />
-                    <Input id="inEmployeeIdEdit" value="{EmployeeID}" editable="false"/>
+                    <Label id="lblEmployeeIdEdit"   text="{i18n>employeeIdLabel}" />
+                    <Input id="inEmployeeIdEdit"    value="{EmployeeID}" editable="false"/>
 
                     <Label id="lblFirstNameEdit" text="{i18n>firstNameLabel}"/>
-                    <!-- <Input id="inFirstNameEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/> -->
                     <Input id="inFirstNameEdit" value="{FirstName}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>
 
  
                     <Label id="lblLastNameEdit" text="{i18n>lastNameLabel}" />
-                    <!-- <Input id="inLastNameEdit" value="" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/> -->
                     <Input id="inLastNameEdit" value="{LastName}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>                    
 
-                    <Label id="lblAgeEdit" text="{i18n>ageLabel}" />
-                    <Input id="inAgeEdit" value="{Age}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>
+                    <Label id="lblAgeEdit"  text="{i18n>ageLabel}" />
+                    <Input id="inAgeEdit"   value="{Age}" required="true" placeholder="{i18n>commonPlaceholder}" liveChange=".onInputChangeForId"/>
 
                     <Label id="lblDateEdit" text="{i18n>dateOfHireLabel}" />
                     <DatePicker
